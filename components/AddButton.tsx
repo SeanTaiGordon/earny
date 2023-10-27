@@ -7,7 +7,7 @@ interface Props {
 	onPress?: () => void;
 }
 
-const AddButton = ({ title, onPress }: Props) => {
+export const AddButton = ({ title, onPress }: Props) => {
 	return (
 		<Container onPress={onPress}>
 			<AddIcon color="#000" height="20" width="20" viewBox="0 0 16 16" />
@@ -46,5 +46,3 @@ const Title = styled.Text`
 	font-size: 19px;
 	font-weight: 400;
 `;
-
-export default AddButton;

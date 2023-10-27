@@ -7,7 +7,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-const SecondaryButton: React.FC<Props> = ({
+export const SecondaryButton: React.FC<Props> = ({
 	onPress,
 	children,
 	disabled,
@@ -31,5 +31,3 @@ const Container = styled.TouchableOpacity<{ disabled }>`
 	border-radius: 10px;
 	background-color: ${({ disabled }) => (disabled ? "#A6A6A6" : "#727272")};
 `;
-
-export default SecondaryButton;

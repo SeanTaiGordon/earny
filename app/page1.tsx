@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	FormCheckboxLabelInput,
 	FormTextInput,
@@ -6,37 +6,56 @@ import {
 	ScreenContainer,
 	Title,
 } from "../components/base";
-import { MainButton, NavBackButton } from "../components";
 import {
-	Keyboard,
-	KeyboardAvoidingView,
-	TouchableWithoutFeedback,
-	View,
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+	ColorScrollSelector,
+	EmojiScrollSelector,
+	MainButton,
+	NavBackButton,
+} from "../components";
+import { KeyboardAvoidingView } from "react-native";
+import { ScrollView } from "react-native";
 
 const Page = () => {
+	const [selectedColor, setSelectedColor] = useState<String>("#d9d9d9");
+	const [selectedIcon, setSelectedIcon] = useState<String>("🧑‍💻");
 	return (
-		<ScreenContainer>
-			<PaddedContainer>
+		<ScrollView>
+			<ScreenContainer>
 				<KeyboardAvoidingView>
-					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-						<View>
-							<NavBackButton />
-							<ScrollView>
-								<Title>📝 Let’s create your profile</Title>
-								<FormTextInput placeholder="Full name*" />
-								<FormTextInput placeholder="Date of birth*" />
-								<FormTextInput placeholder="Email*" />
-								<FormTextInput placeholder="Phone Number*" />
-								<FormCheckboxLabelInput />
-								<MainButton text="Next" disabled={true} />
-							</ScrollView>
-						</View>
-					</TouchableWithoutFeedback>
+					<PaddedContainer>
+						<NavBackButton />
+
+						<Title>📝 Let’s create your profile</Title>
+						<EmojiScrollSelector
+							selectorColor={selectedColor}
+							getSelectedIcon={selectedIcon}
+							onIconSelect={setSelectedIcon}
+						/>
+						<ColorScrollSelector
+							onColorChange={setSelectedColor}
+							getColor={selectedColor}
+						/>
+						<FormTextInput placeholder="Full name*" />
+						<FormTextInput placeholder="Date of birth*" />
+						<FormTextInput placeholder="Email*" />
+						<FormTextInput placeholder="Phone Number*" />
+						<FormCheckboxLabelInput
+							label={"Email me about my applications"}
+							defaultTrue
+						/>
+						<FormCheckboxLabelInput
+							label={"Phone me about my applications"}
+							defaultTrue
+						/>
+						<FormCheckboxLabelInput
+							label={"Agree to privacy policy"}
+							defaultTrue
+						/>
+						<MainButton text="Next" disabled={true} />
+					</PaddedContainer>
 				</KeyboardAvoidingView>
-			</PaddedContainer>
-		</ScreenContainer>
+			</ScreenContainer>
+		</ScrollView>
 	);
 };
 

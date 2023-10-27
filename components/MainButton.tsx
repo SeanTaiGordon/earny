@@ -8,7 +8,7 @@ interface Props {
 	disabled?: boolean;
 }
 
-const MainButton = ({ text, onPress, disabled }: Props) => {
+export const MainButton = ({ text, onPress, disabled }: Props) => {
 	return (
 		<Container onPress={onPress} disabled={disabled}>
 			<Title>{text}</Title>
@@ -42,5 +42,3 @@ const Title = styled.Text`
 	font-weight: 500;
 	align-self: center;
 `;
-
-export default MainButton;

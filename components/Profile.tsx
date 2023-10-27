@@ -5,7 +5,7 @@ interface Props {
 	onPress?: () => void;
 }
 
-const Profile = ({ onPress }: Props) => {
+export const Profile = ({ onPress }: Props) => {
 	return (
 		<Container>
 			<ProfilePlaceholder onPress={onPress} />
@@ -29,5 +29,3 @@ const ProfilePlaceholder = styled.TouchableOpacity`
 	display: flex;
 	margin-left: auto;
 `;
-
-export default Profile;
