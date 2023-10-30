@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	FormCheckboxLabelInput,
 	FormTextInput,
@@ -10,19 +10,41 @@ import {
 	ColorScrollSelector,
 	EmojiScrollSelector,
 	MainButton,
-	NavBackButton,
 } from "../components";
-import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styled from "styled-components/native";
+import { DatePicker } from "../components/DatePicker";
+import { router } from "expo-router";
 
-const Home = () => {
+export const Home = () => {
 	const [selectedColor, setSelectedColor] = useState<String>("#d9d9d9");
 	const [selectedIcon, setSelectedIcon] = useState<String>("🧑‍💻");
+	const [date, setDate] = useState<Date>();
+	const [name, onChangeName] = useState<string>("");
+	const [email, onChangeEmail] = useState<string>("");
+	const [formValidated, setFormValidate] = useState<boolean>(false);
+
+	const submit = () => {
+		console.log(date);
+		router.push({
+			pathname: "/phone_auth/phoneNumberRequest",
+		});
+	};
+
+	useEffect(() => {
+		// Update form validation
+		if (name.length > 1 && email.length > 1 && date) {
+			setFormValidate(true);
+		} else {
+			setFormValidate(false);
+		}
+	}, [name, email, date]);
+
 	return (
-		<ScrollView>
-			<ScreenContainer>
-				<KeyboardAvoidingView>
+		<ScreenContainer>
+			<KeyboardAwareScrollView>
+				<ScrollView showsVerticalScrollIndicator={false}>
 					<PaddedContainer>
 						<Title>📝 Let’s create your profile</Title>
 						<EmojiScrollSelector
@@ -34,31 +56,53 @@ const Home = () => {
 							onColorChange={setSelectedColor}
 							getColor={selectedColor}
 						/>
-						<FormTextInput placeholder="Full name*" />
-						<FormTextInput placeholder="Date of birth*" />
-						<FormTextInput placeholder="Email*" />
-						<FormTextInput placeholder="Phone Number*" />
-						<FormCheckboxLabelInput
-							label={"Email me about my applications"}
-							defaultTrue
+						<FormTextInput
+							placeholder="Full name*"
+							autoComplete="given-name"
+							inputMode="text"
+							onChangeText={(text) => onChangeName(text)}
+							value={name}
 						/>
-						<FormCheckboxLabelInput
-							label={"Phone me about my applications"}
-							defaultTrue
+						<DatePicker getDate={(date) => setDate(date)} />
+						<FormTextInput
+							placeholder="Email*"
+							autoComplete="email"
+							inputMode="email"
+							keyboardType="email-address"
+							onChangeText={(text) => onChangeEmail(text)}
+							value={email}
 						/>
-						<FormCheckboxLabelInput
-							label={"Agree to privacy policy"}
-							defaultTrue
+
+						<CheckboxContainer>
+							<FormCheckboxLabelInput
+								label={"Email me about my applications"}
+								defaultTrue
+							/>
+							<FormCheckboxLabelInput
+								label={"Phone me about my applications"}
+								defaultTrue
+							/>
+							<FormCheckboxLabelInput
+								label={"Agree to privacy policy"}
+								defaultTrue
+							/>
+						</CheckboxContainer>
+
+						<MainButton
+							text="Next"
+							disabled={!formValidated}
+							onPress={submit}
 						/>
-						<NextButton text="Next" disabled={true} />
 					</PaddedContainer>
-				</KeyboardAvoidingView>
-			</ScreenContainer>
-		</ScrollView>
+				</ScrollView>
+			</KeyboardAwareScrollView>
+		</ScreenContainer>
 	);
 };
 
-const NextButton = styled(MainButton)`
-	margin-top: 30px;
+const CheckboxContainer = styled.View`
+	padding-top: 10px;
+	padding-bottom: 30px;
 `;
+
 export default Home;

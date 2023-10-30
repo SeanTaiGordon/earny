@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const ColorScrollSelector = ({ onColorChange, getColor }: Props) => {
-	const [scrollWidth, setScrollWidth] = useState<Number>();
+	const [scrollWidth, setScrollWidth] = useState<Number>(0);
 	const scrollView = useRef<ScrollView>(null);
 	const items = [
 		"#d9d9d9",
@@ -23,10 +23,6 @@ export const ColorScrollSelector = ({ onColorChange, getColor }: Props) => {
 		"#1289A7",
 	];
 
-	const getActiveItem = (offset) => {
-		console.log(offset);
-	};
-
 	return (
 		<Container>
 			<ScrollView
@@ -36,9 +32,6 @@ export const ColorScrollSelector = ({ onColorChange, getColor }: Props) => {
 				onLayout={(event) => setScrollWidth(event.nativeEvent.layout.width)}
 				ref={scrollView}
 				showsHorizontalScrollIndicator={false}
-				onScrollEndDrag={(event) => {
-					getActiveItem(event.nativeEvent.contentOffset.x);
-				}}
 			>
 				{items.map((item, index) => (
 					<Item

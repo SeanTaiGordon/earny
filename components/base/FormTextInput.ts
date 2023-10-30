@@ -1,6 +1,8 @@
 import styled from "styled-components/native";
 
-export const FormTextInput = styled.TextInput`
+export const FormTextInput = styled.TextInput.attrs({
+	placeholderTextColor: "#ccc",
+})`
 	border: 2px #8e4dff solid;
 	padding: 10px;
 	margin-top: 10px;

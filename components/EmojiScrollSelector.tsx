@@ -13,7 +13,7 @@ export const EmojiScrollSelector = ({
 	getSelectedIcon,
 	onIconSelect,
 }: Props) => {
-	const [scrollWidth, setScrollWidth] = useState<Number>();
+	const [scrollWidth, setScrollWidth] = useState<Number>(0);
 	const scrollView = useRef<ScrollView>(null);
 	const items = ["🧑‍💻", "🧑‍🎓", "🧑‍🔬", "🧑‍🎨", "🧑‍🌾", "🧑‍🏫", "🧑‍💼", "🧙", "🦹", "🤵"];
 
