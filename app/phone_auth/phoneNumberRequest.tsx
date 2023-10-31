@@ -1,6 +1,9 @@
 import React from "react";
 import {
 	FormTextInput,
+	KeyboardDismissableView,
+	MainButton,
+	NavBackButton,
 	PaddedContainer,
 	ScreenContainer,
 	Subtitle,
@@ -8,6 +11,8 @@ import {
 } from "../../components";
 import { Dropdown } from "react-native-element-dropdown";
 import styled from "styled-components/native";
+import { Keyboard, TouchableWithoutFeedback } from "react-native";
+import { router } from "expo-router";
 
 const data: { label: String; value: String }[] = [
 	{ label: "🇬🇧 +44", value: "44" },
@@ -16,26 +21,37 @@ const data: { label: String; value: String }[] = [
 
 const PhoneNumberRequest = () => (
 	<ScreenContainer>
-		<PaddedContainer>
-			<Title>☎️ What's your phone number </Title>
-			<Subtitle>We're helping you keep your account in your hands.</Subtitle>
-			<Container>
-				<CountryDropdown
-					data={data}
-					labelField="label"
-					valueField="value"
-					onChange={function (item: string): void {}}
-					placeholder={data[0].label}
-					fontFamily="Jost_400Regular"
-				/>
+		<KeyboardDismissableView>
+			<PaddedContainer>
+				<NavBackButton />
+				<Title>☎️ What's your phone number </Title>
+				<Subtitle>We're helping you keep your account in your hands.</Subtitle>
+				<Container>
+					<CountryDropdown
+						data={data}
+						labelField="label"
+						valueField="value"
+						onChange={function (item: string): void {}}
+						placeholder={data[0].label}
+						fontFamily="Jost_400Regular"
+					/>
 
-				<TelInput
-					placeholder="Phone number"
-					keyboardType="phone-pad"
-					autoComplete="tel"
+					<TelInput
+						placeholder="Phone number"
+						keyboardType="phone-pad"
+						autoComplete="tel"
+					/>
+				</Container>
+				<MainButton
+					text="Send me a text"
+					onPress={() => {
+						router.push({
+							pathname: "/phone_auth/phoneNumberConfirm",
+						});
+					}}
 				/>
-			</Container>
-		</PaddedContainer>
+			</PaddedContainer>
+		</KeyboardDismissableView>
 	</ScreenContainer>
 );
 
@@ -52,6 +68,7 @@ const Container = styled.View`
 	flex-direction: row;
 	width: 100%;
 	margin-top: 50px;
+	margin-bottom: 50px;
 `;
 
 const TelInput = styled(FormTextInput)`

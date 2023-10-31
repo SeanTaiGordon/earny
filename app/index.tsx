@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
 	FormCheckboxLabelInput,
 	FormTextInput,
+	KeyboardDismissableView,
 	PaddedContainer,
 	ScreenContainer,
 	Title,
-} from "../components/base";
-import {
 	ColorScrollSelector,
 	EmojiScrollSelector,
 	MainButton,
@@ -43,59 +42,62 @@ export const Home = () => {
 
 	return (
 		<ScreenContainer>
-			<KeyboardAwareScrollView>
-				<ScrollView showsVerticalScrollIndicator={false}>
-					<PaddedContainer>
-						<Title>📝 Let’s create your profile</Title>
-						<EmojiScrollSelector
-							selectorColor={selectedColor}
-							getSelectedIcon={selectedIcon}
-							onIconSelect={setSelectedIcon}
-						/>
-						<ColorScrollSelector
-							onColorChange={setSelectedColor}
-							getColor={selectedColor}
-						/>
-						<FormTextInput
-							placeholder="Full name*"
-							autoComplete="given-name"
-							inputMode="text"
-							onChangeText={(text) => onChangeName(text)}
-							value={name}
-						/>
-						<DatePicker getDate={(date) => setDate(date)} />
-						<FormTextInput
-							placeholder="Email*"
-							autoComplete="email"
-							inputMode="email"
-							keyboardType="email-address"
-							onChangeText={(text) => onChangeEmail(text)}
-							value={email}
-						/>
+			<KeyboardDismissableView>
+				<KeyboardAwareScrollView>
+					<ScrollView showsVerticalScrollIndicator={false}>
+						<PaddedContainer>
+							<Title>📝 Let’s create your profile</Title>
+							<EmojiScrollSelector
+								selectorColor={selectedColor}
+								getSelectedIcon={selectedIcon}
+								onIconSelect={setSelectedIcon}
+								getColor={selectedColor}
+							/>
+							<ColorScrollSelector
+								onColorChange={setSelectedColor}
+								getColor={selectedColor}
+							/>
+							<FormTextInput
+								placeholder="Full name*"
+								autoComplete="given-name"
+								inputMode="text"
+								onChangeText={(text) => onChangeName(text)}
+								value={name}
+							/>
+							<DatePicker getDate={(date) => setDate(date)} />
+							<FormTextInput
+								placeholder="Email*"
+								autoComplete="email"
+								inputMode="email"
+								keyboardType="email-address"
+								onChangeText={(text) => onChangeEmail(text)}
+								value={email}
+							/>
 
-						<CheckboxContainer>
-							<FormCheckboxLabelInput
-								label={"Email me about my applications"}
-								defaultTrue
-							/>
-							<FormCheckboxLabelInput
-								label={"Phone me about my applications"}
-								defaultTrue
-							/>
-							<FormCheckboxLabelInput
-								label={"Agree to privacy policy"}
-								defaultTrue
-							/>
-						</CheckboxContainer>
+							<CheckboxContainer>
+								<FormCheckboxLabelInput
+									label={"Email me about my applications"}
+									defaultTrue
+								/>
+								<FormCheckboxLabelInput
+									label={"Phone me about my applications"}
+									defaultTrue
+								/>
+								<FormCheckboxLabelInput
+									label={"Agree to privacy policy"}
+									defaultTrue
+								/>
+							</CheckboxContainer>
 
-						<MainButton
-							text="Next"
-							disabled={!formValidated}
-							onPress={submit}
-						/>
-					</PaddedContainer>
-				</ScrollView>
-			</KeyboardAwareScrollView>
+							<MainButton
+								text="Next"
+								disabled={!formValidated}
+								onPress={submit}
+							/>
+						</PaddedContainer>
+					</ScrollView>
+				</KeyboardAwareScrollView>
+			</KeyboardDismissableView>
 		</ScreenContainer>
 	);
 };

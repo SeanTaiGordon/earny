@@ -1,21 +1,31 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import styled from "styled-components/native";
 
 interface Props {
 	selectorColor?: String;
 	getSelectedIcon: String;
+	getColor: String;
 	onIconSelect: (selectedIcon) => void;
 }
 
 export const EmojiScrollSelector = ({
 	selectorColor = "#d9d9d9",
 	getSelectedIcon,
+	getColor,
 	onIconSelect,
 }: Props) => {
 	const [scrollWidth, setScrollWidth] = useState<Number>(0);
 	const scrollView = useRef<ScrollView>(null);
 	const items = ["🧑‍💻", "🧑‍🎓", "🧑‍🔬", "🧑‍🎨", "🧑‍🌾", "🧑‍🏫", "🧑‍💼", "🧙", "🦹", "🤵"];
+
+	// useEffect(() => {
+	// 	scrollView!.current!.scrollTo({
+	// 		x: 80 * items.find(getSelectedIcon),
+	// 		y: 0,
+	// 		animated: true,
+	// 	});
+	// }, [getColor]);
 
 	return (
 		<Container>

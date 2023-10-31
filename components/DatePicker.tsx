@@ -22,7 +22,7 @@ export const DatePicker = ({ getDate }: Props) => {
 	return (
 		<View>
 			<FormTextInput
-				onPressIn={() => setOpen(true)}
+				onPressOut={() => setOpen(true)}
 				placeholder="Date*"
 				editable={false}
 				value={date ? date.toDateString() : ""}

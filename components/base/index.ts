@@ -8,3 +8,4 @@ export * from "./SecondaryHeader";
 export * from "./Subtitle";
 export * from "./ScrollViewContainer";
 export * from "./PaddedContainer";
+export * from "./KeyboardDismissableView";
