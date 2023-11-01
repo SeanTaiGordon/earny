@@ -44,23 +44,24 @@ const PhoneNumberConfirm = () => (
 					</RefreshButtonContainer>
 				</Container>
 
-				<MainButton
-					text="Confirm"
-					onPress={() => {
-						router.push({
-							pathname: "page2",
-						});
-					}}
-				/>
+				<MainButtonContainer>
+					<MainButton
+						text="Confirm"
+						onPress={() => {
+							router.push({
+								pathname: "page2",
+							});
+						}}
+					/>
+				</MainButtonContainer>
 			</PaddedContainer>
 		</KeyboardDismissableView>
 	</ScreenContainer>
 );
-
-const Container = styled.View`
-	margin-top: 50px;
-	margin-bottom: 50px;
+const MainButtonContainer = styled.View`
+	padding-top: 30px;
 `;
+const Container = styled.View``;
 
 const RefreshButtonContainer = styled.TouchableOpacity`
 	margin-top: 10px;

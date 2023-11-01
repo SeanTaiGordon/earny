@@ -59,7 +59,7 @@ export const Home = () => {
 							/>
 							<FormTextInput
 								placeholder="Full name*"
-								autoComplete="given-name"
+								autoComplete="name"
 								inputMode="text"
 								onChangeText={(text) => onChangeName(text)}
 								value={name}
@@ -74,26 +74,13 @@ export const Home = () => {
 								value={email}
 							/>
 
-							<CheckboxContainer>
-								<FormCheckboxLabelInput
-									label={"Email me about my applications"}
-									defaultTrue
+							<MainButtonContainer>
+								<MainButton
+									text="Next"
+									disabled={!formValidated}
+									onPress={submit}
 								/>
-								<FormCheckboxLabelInput
-									label={"Phone me about my applications"}
-									defaultTrue
-								/>
-								<FormCheckboxLabelInput
-									label={"Agree to privacy policy"}
-									defaultTrue
-								/>
-							</CheckboxContainer>
-
-							<MainButton
-								text="Next"
-								disabled={!formValidated}
-								onPress={submit}
-							/>
+							</MainButtonContainer>
 						</PaddedContainer>
 					</ScrollView>
 				</KeyboardAwareScrollView>
@@ -102,9 +89,8 @@ export const Home = () => {
 	);
 };
 
-const CheckboxContainer = styled.View`
-	padding-top: 10px;
-	padding-bottom: 30px;
+const MainButtonContainer = styled.View`
+	padding-top: 30px;
 `;
 
 export default Home;

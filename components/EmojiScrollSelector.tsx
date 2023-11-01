@@ -19,13 +19,13 @@ export const EmojiScrollSelector = ({
 	const scrollView = useRef<ScrollView>(null);
 	const items = ["🧑‍💻", "🧑‍🎓", "🧑‍🔬", "🧑‍🎨", "🧑‍🌾", "🧑‍🏫", "🧑‍💼", "🧙", "🦹", "🤵"];
 
-	// useEffect(() => {
-	// 	scrollView!.current!.scrollTo({
-	// 		x: 80 * items.find(getSelectedIcon),
-	// 		y: 0,
-	// 		animated: true,
-	// 	});
-	// }, [getColor]);
+	useEffect(() => {
+		scrollView!.current!.scrollTo({
+			x: 80 * items.indexOf(getSelectedIcon.toString()),
+			y: 0,
+			animated: true,
+		});
+	}, [getColor]);
 
 	return (
 		<Container>

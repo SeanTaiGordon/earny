@@ -24,13 +24,8 @@ export const MainButton = ({ text, onPress, disabled }: Props) => {
 };
 
 const Container = styled.TouchableOpacity<{ disabled?: boolean }>`
-	display: flex;
 	padding: 14px 18px;
 	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	gap: 17px;
-	align-self: stretch;
 	background: ${({ disabled }) => (disabled ? "#DBC6FF" : "#8E4DFF")};
 `;
 

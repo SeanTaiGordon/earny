@@ -1,5 +1,6 @@
 import React from "react";
 import {
+	FormCheckboxLabelInput,
 	FormTextInput,
 	KeyboardDismissableView,
 	MainButton,
@@ -11,12 +12,11 @@ import {
 } from "../../components";
 import { Dropdown } from "react-native-element-dropdown";
 import styled from "styled-components/native";
-import { Keyboard, TouchableWithoutFeedback } from "react-native";
 import { router } from "expo-router";
 
 const data: { label: String; value: String }[] = [
-	{ label: "🇬🇧 +44", value: "44" },
 	{ label: "🇮🇪 +353", value: "353" },
+	{ label: "🇬🇧 +44", value: "44" },
 ];
 
 const PhoneNumberRequest = () => (
@@ -27,12 +27,14 @@ const PhoneNumberRequest = () => (
 				<Title>☎️ What's your phone number </Title>
 				<Subtitle>We're helping you keep your account in your hands.</Subtitle>
 				<Container>
-					<CountryDropdown
+					<Dropdown
+						style={styles.CountryDropdown}
+						containerStyle={styles.CountryDropdownContainer}
 						data={data}
 						labelField="label"
 						valueField="value"
-						onChange={function (item: string): void {}}
-						placeholder={data[0].label}
+						onChange={function ({ label, value }): void {}}
+						placeholder={String(data[0].label)}
 						fontFamily="Jost_400Regular"
 					/>
 
@@ -42,6 +44,12 @@ const PhoneNumberRequest = () => (
 						autoComplete="tel"
 					/>
 				</Container>
+				<CheckboxContainer>
+					<FormCheckboxLabelInput
+						label="Email me about my applications"
+						defaultTrue
+					/>
+				</CheckboxContainer>
 				<MainButton
 					text="Send me a text"
 					onPress={() => {
@@ -55,12 +63,22 @@ const PhoneNumberRequest = () => (
 	</ScreenContainer>
 );
 
-const CountryDropdown = styled(Dropdown)`
-	border: 2px #8e4dff solid;
-	border-radius: 5px;
-	font-family: Jost_400Regular;
-	width: 110px;
-	padding-left: 20px;
+const styles = {
+	CountryDropdown: {
+		fontFamily: "Jost_400Regular",
+		width: 110,
+		paddingLeft: 20,
+	},
+	CountryDropdownContainer: {
+		borderWidth: 2,
+		borderColor: "#8E4DFF",
+		borderRadius: 5,
+	},
+};
+
+const CheckboxContainer = styled.View`
+	padding-top: 10px;
+	padding-bottom: 30px;
 `;
 
 const Container = styled.View`
