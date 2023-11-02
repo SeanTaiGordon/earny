@@ -49,7 +49,7 @@ const PhoneNumberConfirm = () => (
 						text="Confirm"
 						onPress={() => {
 							router.push({
-								pathname: "page2",
+								pathname: "preferredRoles",
 							});
 						}}
 					/>

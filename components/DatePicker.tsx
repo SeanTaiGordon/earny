@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { FormTextInput } from "./base";
-import { Pressable, View } from "react-native";
+import { Keyboard, Pressable, View } from "react-native";
 
 const MIN_AGE_OF_APPLICANT = 18;
 
@@ -22,7 +22,10 @@ export const DatePicker = ({ getDate }: Props) => {
 	return (
 		<View>
 			<FormTextInput
-				onPressOut={() => setOpen(true)}
+				onPressOut={() => {
+					Keyboard.dismiss();
+					setOpen(true);
+				}}
 				placeholder="Date*"
 				editable={false}
 				value={date ? date.toDateString() : ""}

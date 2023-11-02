@@ -36,7 +36,7 @@ export const Home = () => {
 		if (name.length > 1 && email.length > 1 && date) {
 			setFormValidate(true);
 		} else {
-			setFormValidate(false);
+			setFormValidate(true); //TODO set to false
 		}
 	}, [name, email, date]);
 
