@@ -1,29 +1,30 @@
 import styled from "styled-components/native";
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface Props {
 	onPress?: () => void;
+	children?: ReactNode;
 }
 
-export const Profile = ({ onPress }: Props) => {
+export const Profile = ({ onPress, children }: Props) => {
 	return (
 		<Container>
-			<ProfilePlaceholder onPress={onPress} />
+			<ProfilePlaceholder onPress={onPress} children={children} />
 		</Container>
 	);
 };
 
 const Container = styled.View`
 	display: flex;
-	padding: 50px 0px 20px 0px;
+	padding: 30px 30px 57px 0px;
 	justify-content: flex-end;
 	align-items: flex-start;
 	align-self: stretch;
 `;
 
 const ProfilePlaceholder = styled.TouchableOpacity`
-	width: 60px;
-	height: 60px;
+	width: 70px;
+	height: 70px;
 	background: #d9d9d9;
 	border-radius: 50%;
 	display: flex;

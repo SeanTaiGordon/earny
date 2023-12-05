@@ -17,6 +17,7 @@ export const DatePicker = ({ getDate }: Props) => {
 
 	useEffect(() => {
 		getDate(date);
+		console.log(date);
 	}, [date]);
 
 	return (
@@ -26,7 +27,7 @@ export const DatePicker = ({ getDate }: Props) => {
 					Keyboard.dismiss();
 					setOpen(true);
 				}}
-				placeholder="Date*"
+				placeholder="Date of birth*"
 				editable={false}
 				value={date ? date.toDateString() : ""}
 			/>

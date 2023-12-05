@@ -42,11 +42,16 @@ const PhoneNumberRequest = () => (
 						placeholder="Phone number"
 						keyboardType="phone-pad"
 						autoComplete="tel"
+						returnKeyType="done"
 					/>
 				</Container>
 				<CheckboxContainer>
 					<FormCheckboxLabelInput
-						label="Email me about my applications"
+						label="Text me about my applications"
+						defaultTrue
+					/>
+					<FormCheckboxLabelInput
+						label="Call me about my applications"
 						defaultTrue
 					/>
 				</CheckboxContainer>
@@ -79,6 +84,7 @@ const styles = {
 const CheckboxContainer = styled.View`
 	padding-top: 10px;
 	padding-bottom: 30px;
+	color: #676767;
 `;
 
 const Container = styled.View`

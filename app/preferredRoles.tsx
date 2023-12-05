@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
 import {
 	KeyboardDismissableView,
 	MainButton,
@@ -12,10 +11,21 @@ import {
 } from "../components";
 import styled from "styled-components/native";
 import { router } from "expo-router";
-import { View } from "react-native";
 
 const PreferredRoles = () => {
-	const [sliderValue, setSliderValue] = useState<number>(0);
+	const [hoursSliderValue, setHoursSliderValue] = useState<number>(0);
+	const [customerFacingSliderValue, setCustomerFacingSliderValue] =
+		useState<number>(0);
+
+	function nearestValue(value) {
+		if (value <= 25) {
+			return 0;
+		} else if (value <= 75) {
+			return 50;
+		} else {
+			return 100;
+		}
+	}
 
 	return (
 		<ScreenContainer>
@@ -27,26 +37,60 @@ const PreferredRoles = () => {
 						We'll help you find roles closer to what you prefer.
 					</Subtitle>
 
-					<Subtitle>
-						I have time to work <Bold>{(sliderValue * 0.5).toFixed(0)}</Bold>{" "}
-						hours a week
-					</Subtitle>
+					<Container>
+						<Subtitle>
+							I have time to work{" "}
+							<Bold>{(hoursSliderValue / 2).toFixed(0)}</Bold> hours a week
+						</Subtitle>
 
-					<View>
 						<Slider
 							onValueChange={(value) => {
-								setSliderValue(value);
+								setHoursSliderValue(value);
 							}}
-							numIntervals={50}
+							numIntervals={1}
+							defaultInterval={1}
+							initialValue={50}
 						/>
-					</View>
+					</Container>
 
+					<Container>
+						<Subtitle>
+							{
+								{
+									0: (
+										<>
+											I'm <Bold>not fond</Bold> of customer facing roles
+										</>
+									),
+									50: (
+										<>
+											I'm <Bold>indifferent</Bold> to customer facing roles
+										</>
+									),
+									100: (
+										<>
+											I <Bold>enjoy</Bold> customer facing roles
+										</>
+									),
+								}[nearestValue(customerFacingSliderValue)]
+							}
+						</Subtitle>
+
+						<Slider
+							onValueChange={(value) => {
+								setCustomerFacingSliderValue(value);
+							}}
+							numIntervals={2}
+							defaultInterval={1}
+							initialValue={50}
+						/>
+					</Container>
 					<MainButtonContainer>
 						<MainButton
 							text="Next"
 							onPress={() => {
 								router.push({
-									pathname: "page2",
+									pathname: "main",
 								});
 							}}
 						/>
@@ -57,11 +101,15 @@ const PreferredRoles = () => {
 	);
 };
 const MainButtonContainer = styled.View`
-	padding-top: 30px;
+	padding-top: 90px;
 `;
 
 const Bold = styled.Text`
 	font-family: Jost_500Medium;
+`;
+
+const Container = styled.View`
+	margin-top: 30px;
 `;
 
 export default PreferredRoles;

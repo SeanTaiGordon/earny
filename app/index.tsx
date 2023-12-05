@@ -9,6 +9,7 @@ import {
 	ColorScrollSelector,
 	EmojiScrollSelector,
 	MainButton,
+	Subtitle,
 } from "../components";
 import { ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -25,7 +26,6 @@ export const Home = () => {
 	const [formValidated, setFormValidate] = useState<boolean>(false);
 
 	const submit = () => {
-		console.log(date);
 		router.push({
 			pathname: "/phone_auth/phoneNumberRequest",
 		});
@@ -81,6 +81,18 @@ export const Home = () => {
 									onPress={submit}
 								/>
 							</MainButtonContainer>
+
+							<LoginButton
+								onPress={() =>
+									router.push({
+										pathname: "/phone_login/phoneNumberRequest",
+									})
+								}
+							>
+								<LoginButtonText>
+									Already have an account? Login here
+								</LoginButtonText>
+							</LoginButton>
 						</PaddedContainer>
 					</ScrollView>
 				</KeyboardAwareScrollView>
@@ -91,6 +103,20 @@ export const Home = () => {
 
 const MainButtonContainer = styled.View`
 	padding-top: 30px;
+`;
+
+const LoginButton = styled.TouchableOpacity`
+	padding-top: 30px;
+`;
+
+const LoginButtonText = styled.Text`
+	color: #8e4dff;
+	font-family: Jost_400Regular;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 33px;
+	text-align: center;
 `;
 
 export default Home;

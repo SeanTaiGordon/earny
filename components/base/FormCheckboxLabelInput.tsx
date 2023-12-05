@@ -13,12 +13,17 @@ export const FormCheckboxLabelInput = ({
 }: Props) => {
 	const [toggleCheckBox, setToggleCheckBox] = useState(defaultTrue);
 	return (
-		<Container>
-			<Checkbox
+		<Container
+			onPress={() => {
+				setToggleCheckBox(!toggleCheckBox);
+			}}
+		>
+			<StyledCheckbox
 				color="#8e4dff"
 				disabled={false}
 				value={toggleCheckBox}
 				onValueChange={(newValue) => setToggleCheckBox(newValue)}
+				style={{ width: 20 }}
 			/>
 			<Label>{label}</Label>
 		</Container>
@@ -32,9 +37,13 @@ const Label = styled.Text`
 	color: #676767;
 `;
 
-const Container = styled.View`
-	flex: 1;
+const Container = styled.TouchableOpacity`
 	flex-direction: row;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	align-items: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+`;
+
+const StyledCheckbox = styled(Checkbox)`
+	width: 20px;
 `;
