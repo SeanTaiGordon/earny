@@ -3,8 +3,12 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import BackButton from "react-native-bootstrap-icons/icons/chevron-left";
 
-export const NavBackButton = () => (
-	<TouchableOpacity onPress={() => router.back()}>
+interface Props {
+	onPress?: () => void;
+}
+
+export const NavBackButton = ({ onPress }: Props) => (
+	<TouchableOpacity onPress={() => (onPress ? onPress() : router.back())}>
 		<BackButton
 			color="#000"
 			height="32"
