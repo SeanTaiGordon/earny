@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native";
 import styled from "styled-components/native";
 import TickIcon from "react-native-bootstrap-icons/icons/check-lg";
@@ -6,9 +6,14 @@ import TickIcon from "react-native-bootstrap-icons/icons/check-lg";
 interface Props {
 	onColorChange: (color: String) => void;
 	getColor: String;
+	getSelectedIcon: String;
 }
 
-export const ColorScrollSelector = ({ onColorChange, getColor }: Props) => {
+export const ColorScrollSelector = ({
+	onColorChange,
+	getColor,
+	getSelectedIcon,
+}: Props) => {
 	const [scrollWidth, setScrollWidth] = useState<Number>(0);
 	const scrollView = useRef<ScrollView>(null);
 	const items = [
@@ -22,6 +27,14 @@ export const ColorScrollSelector = ({ onColorChange, getColor }: Props) => {
 		"#D980FA",
 		"#1289A7",
 	];
+
+	useEffect(() => {
+		scrollView!.current!.scrollTo({
+			x: 80 * items.indexOf(getColor.toString()),
+			y: 0,
+			animated: true,
+		});
+	}, [getSelectedIcon]);
 
 	return (
 		<Container>

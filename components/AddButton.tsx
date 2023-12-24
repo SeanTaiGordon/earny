@@ -42,7 +42,7 @@ const Title = styled.Text`
 	display: flex;
 	justify-content: center;
 	color: #000;
-	font-family: Jost;
+	font-family: Jost_400Regular;
 	font-size: 19px;
 	font-weight: 400;
 `;

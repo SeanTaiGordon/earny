@@ -22,16 +22,14 @@ import styled from "styled-components/native";
 import ArrowRepeatIcon from "react-native-bootstrap-icons/icons/arrow-repeat";
 import { router } from "expo-router";
 import { View } from "react-native";
-
-const data: { label: String; value: String }[] = [
-	{ label: "🇮🇪 +353", value: "353" },
-	{ label: "🇬🇧 +44", value: "44" },
-];
+import { phonePrefixes } from "../../constants";
 
 const PhoneNumberRequest = () => {
 	const recaptchaVerifier = useRef<FirebaseRecaptchaVerifierModal | null>(null);
 	const [phoneNumber, setPhoneNumber] = useState<string>("");
-	const [areaCode, setAreaCode] = useState<string>(`+${data[0].value}`);
+	const [areaCode, setAreaCode] = useState<string>(
+		`+${phonePrefixes[0].value}`
+	);
 	const [verifier, setVerifier] = useState<ConfirmationResult>();
 	const [verificationCode, setVerificationCode] = useState<string>("");
 	const [inputCodeScreen, setInputCodeScreen] = useState<boolean>(false);
@@ -45,7 +43,6 @@ const PhoneNumberRequest = () => {
 				recaptchaVerifier.current
 			)
 				.then((confirmationResult) => {
-					console.log(confirmationResult);
 					setVerifier(confirmationResult);
 					setInputCodeScreen(true);
 				})
@@ -62,8 +59,6 @@ const PhoneNumberRequest = () => {
 			// );
 
 			// setVerificationCode(verificationId);
-
-			// console.log(verificationId);
 		}
 	};
 
@@ -73,6 +68,9 @@ const PhoneNumberRequest = () => {
 				?.confirm(verificationCode)
 				.then((result) => {
 					console.log(result);
+					router.push({
+						pathname: "",
+					});
 				})
 				.catch(() => {
 					alert("Wrong code 😪");
@@ -131,13 +129,13 @@ const PhoneNumberRequest = () => {
 						<Dropdown
 							style={styles.CountryDropdown}
 							containerStyle={styles.CountryDropdownContainer}
-							data={data}
+							data={phonePrefixes}
 							labelField="label"
 							valueField="value"
 							onChange={(value) => {
 								setAreaCode(`+${value.value}`);
 							}}
-							placeholder={String(data[0].label)}
+							placeholder={String(phonePrefixes[0].label)}
 							fontFamily="Jost_400Regular"
 						/>
 

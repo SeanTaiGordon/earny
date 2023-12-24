@@ -89,9 +89,7 @@ const PreferredRoles = () => {
 						<MainButton
 							text="Next"
 							onPress={() => {
-								router.push({
-									pathname: "main",
-								});
+								router.replace("");
 							}}
 						/>
 					</MainButtonContainer>

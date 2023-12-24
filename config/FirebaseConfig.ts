@@ -1,6 +1,10 @@
-import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import {
+	initializeAuth,
+	getReactNativePersistence,
+	getAuth,
+} from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 // Optionally import the services that you want to use
@@ -21,7 +25,8 @@ export const firebaseConfig = {
 	measurementId: "G-GK4YRW1G80",
 };
 
-export const app = initializeApp(firebaseConfig);
+export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
 export const auth = initializeAuth(app, {
 	persistence: getReactNativePersistence(ReactNativeAsyncStorage),
 });

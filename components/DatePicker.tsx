@@ -17,7 +17,6 @@ export const DatePicker = ({ getDate }: Props) => {
 
 	useEffect(() => {
 		getDate(date);
-		console.log(date);
 	}, [date]);
 
 	return (

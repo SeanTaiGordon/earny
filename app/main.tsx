@@ -10,13 +10,21 @@ import {
 } from "../components";
 import styled from "styled-components/native";
 import { ScrollView } from "react-native";
+import { router } from "expo-router";
+import { Button } from "react-native";
 
 const Main = () => {
 	return (
 		<ScreenContainer>
 			<KeyboardDismissableView>
 				<ScrollView showsVerticalScrollIndicator={false}>
-					<Profile>
+					<Profile
+						onPress={() => {
+							router.push({
+								pathname: "profile",
+							});
+						}}
+					>
 						<Item background={"#F3A683"}>
 							<ProfileText>🧑‍🎨</ProfileText>
 						</Item>
@@ -81,15 +89,11 @@ const DottedLine = styled.View`
 	margin-bottom: 20px;
 `;
 
-const ProfileContainer = styled.View`
-	padding-right: 30px;
-`;
-
 const ProfileText = styled.Text`
 	font-size: 40px;
 `;
 
-const Item = styled.TouchableOpacity<{ background }>`
+const Item = styled.View<{ background }>`
 	background-color: ${({ background }) => background};
 	margin-left: 5px;
 	margin-right: 5px;

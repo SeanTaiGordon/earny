@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
 	FormCheckboxLabelInput,
 	FormTextInput,
@@ -13,60 +13,99 @@ import {
 import { Dropdown } from "react-native-element-dropdown";
 import styled from "styled-components/native";
 import { router } from "expo-router";
+import { phonePrefixes } from "../../constants";
+import { View } from "react-native";
+import ArrowRepeatIcon from "react-native-bootstrap-icons/icons/arrow-repeat";
 
-const data: { label: String; value: String }[] = [
-	{ label: "🇮🇪 +353", value: "353" },
-	{ label: "🇬🇧 +44", value: "44" },
-];
+const PhoneNumberRequest = () => {
+	const [inputCodeScreen, setInputCodeScreen] = useState<boolean>(false);
+	// Create account using phone number and verify it when send me a text is pressed
+	return inputCodeScreen ? (
+		<ScreenContainer>
+			<KeyboardDismissableView>
+				<PaddedContainer>
+					<NavBackButton onPress={() => setInputCodeScreen(false)} />
+					<Title>☎️ Check your phone </Title>
+					<Subtitle>We just texted you a confirmation code.</Subtitle>
 
-const PhoneNumberRequest = () => (
-	<ScreenContainer>
-		<KeyboardDismissableView>
-			<PaddedContainer>
-				<NavBackButton />
-				<Title>☎️ What's your phone number </Title>
-				<Subtitle>We're helping you keep your account in your hands.</Subtitle>
-				<Container>
-					<Dropdown
-						style={styles.CountryDropdown}
-						containerStyle={styles.CountryDropdownContainer}
-						data={data}
-						labelField="label"
-						valueField="value"
-						onChange={function ({ label, value }): void {}}
-						placeholder={String(data[0].label)}
-						fontFamily="Jost_400Regular"
-					/>
+					<View>
+						<FormTextInput
+							placeholder="Confirmation code"
+							autoComplete="one-time-code"
+						/>
 
-					<TelInput
-						placeholder="Phone number"
-						keyboardType="phone-pad"
-						autoComplete="tel"
-						returnKeyType="done"
+						<RefreshButtonContainer>
+							<ArrowRepeatIcon
+								color="#000"
+								height="21"
+								width="21"
+								viewBox="0 0 16 16"
+								style={{ flex: 1 }}
+							/>
+							<ButtonText>Request new code</ButtonText>
+						</RefreshButtonContainer>
+					</View>
+
+					<MainButtonContainer>
+						<MainButton
+							text="Confirm"
+							onPress={() => {
+								router.replace("preferredRoles");
+							}}
+						/>
+					</MainButtonContainer>
+				</PaddedContainer>
+			</KeyboardDismissableView>
+		</ScreenContainer>
+	) : (
+		<ScreenContainer>
+			<KeyboardDismissableView>
+				<PaddedContainer>
+					<NavBackButton />
+					<Title>☎️ What's your phone number </Title>
+					<Subtitle>
+						We're helping you keep your account in your hands.
+					</Subtitle>
+					<Container>
+						<Dropdown
+							style={styles.CountryDropdown}
+							containerStyle={styles.CountryDropdownContainer}
+							data={phonePrefixes}
+							labelField="label"
+							valueField="value"
+							onChange={function ({ label, value }): void {}}
+							placeholder={String(phonePrefixes[0].label)}
+							fontFamily="Jost_400Regular"
+						/>
+
+						<TelInput
+							placeholder="Phone number"
+							keyboardType="phone-pad"
+							autoComplete="tel"
+							returnKeyType="done"
+						/>
+					</Container>
+					<CheckboxContainer>
+						<FormCheckboxLabelInput
+							label="Text me about my applications"
+							defaultTrue
+						/>
+						<FormCheckboxLabelInput
+							label="Call me about my applications"
+							defaultTrue
+						/>
+					</CheckboxContainer>
+					<MainButton
+						text="Send me a text"
+						onPress={() => {
+							setInputCodeScreen(true);
+						}}
 					/>
-				</Container>
-				<CheckboxContainer>
-					<FormCheckboxLabelInput
-						label="Text me about my applications"
-						defaultTrue
-					/>
-					<FormCheckboxLabelInput
-						label="Call me about my applications"
-						defaultTrue
-					/>
-				</CheckboxContainer>
-				<MainButton
-					text="Send me a text"
-					onPress={() => {
-						router.push({
-							pathname: "/phone_auth/phoneNumberConfirm",
-						});
-					}}
-				/>
-			</PaddedContainer>
-		</KeyboardDismissableView>
-	</ScreenContainer>
-);
+				</PaddedContainer>
+			</KeyboardDismissableView>
+		</ScreenContainer>
+	);
+};
 
 const styles = {
 	CountryDropdown: {
@@ -100,4 +139,28 @@ const TelInput = styled(FormTextInput)`
 	height: 100%;
 	margin-top: 0;
 `;
+
+const MainButtonContainer = styled.View`
+	padding-top: 30px;
+`;
+
+const RefreshButtonContainer = styled.TouchableOpacity`
+	margin-top: 10px;
+	display: flex;
+	padding: 14px 18px;
+	flex-direction: row;
+	gap: 17px;
+	border-radius: 10px;
+	background: #eaeaea;
+	align-self: center;
+`;
+
+const ButtonText = styled.Text`
+	color: #000;
+	font-family: Jost_400Regular;
+	font-size: 17px;
+	font-weight: 500;
+	align-self: center;
+`;
+
 export default PhoneNumberRequest;

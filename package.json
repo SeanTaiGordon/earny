@@ -9,6 +9,7 @@
 		"web": "expo start --web"
 	},
 	"dependencies": {
+		"@apollo/client": "^3.8.8",
 		"@expo-google-fonts/dela-gothic-one": "^0.2.3",
 		"@expo-google-fonts/inter": "^0.2.3",
 		"@expo-google-fonts/jost": "^0.2.3",
@@ -32,6 +33,7 @@
 		"expo-status-bar": "~1.4.4",
 		"firebase": "^10.7.0",
 		"firebaseui": "^6.1.0",
+		"graphql": "^16.8.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-native": "0.71.14",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useEffect, useMemo, useState } from "react";
 import {
 	useFonts,
 	DelaGothicOne_400Regular,
@@ -6,6 +6,11 @@ import {
 import { Jost_400Regular, Jost_500Medium } from "@expo-google-fonts/jost";
 
 import { Stack } from "expo-router";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { auth } from "../config";
+
+export const UserContext = createContext<User | undefined>(undefined);
 
 const Layout = () => {
 	let [fontsLoaded] = useFonts({
@@ -14,11 +19,29 @@ const Layout = () => {
 		Jost_500Medium,
 	});
 
+	// Initialize Apollo Client
+	const client = new ApolloClient({
+		uri: "http://localhost:4000/graphql",
+		cache: new InMemoryCache(),
+	});
+
+	const [user, setUser] = useState<User | null>(null);
+
+	useEffect(() => {
+		onAuthStateChanged(auth, (user) => setUser(user));
+	}, [user]);
+
 	if (!fontsLoaded) {
 		return null;
 	}
 
-	return <Stack screenOptions={{ headerShown: false }} />;
+	return (
+		<UserContext.Provider value={user as User | undefined}>
+			<ApolloProvider client={client}>
+				<Stack screenOptions={{ headerShown: false }} />
+			</ApolloProvider>
+		</UserContext.Provider>
+	);
 };
 
 export default Layout;

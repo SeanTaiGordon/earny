@@ -4,7 +4,7 @@ export const SecondaryHeader = styled.Text`
 	display: flex;
 	justify-content: center;
 	color: #fff;
-	font-family: Jost;
+	font-family: _400Regular;
 	font-size: 15px;
 	font-weight: 400;
 `;
