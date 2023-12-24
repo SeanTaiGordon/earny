@@ -15,7 +15,7 @@ import styled from "styled-components/native";
 import { DatePicker } from "../components/DatePicker";
 import { router } from "expo-router";
 
-export const Home = () => {
+export const CreateProfile = () => {
 	const [selectedColor, setSelectedColor] = useState<String>("#d9d9d9");
 	const [selectedIcon, setSelectedIcon] = useState<String>("🧑‍💻");
 	const [date, setDate] = useState<Date>();
@@ -118,4 +118,4 @@ const LoginButtonText = styled.Text`
 	text-align: center;
 `;
 
-export default Home;
+export default CreateProfile;

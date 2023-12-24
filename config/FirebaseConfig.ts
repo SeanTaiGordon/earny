@@ -8,13 +8,13 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 
 // Initialize Firebase
 export const firebaseConfig = {
-	apiKey: "AIzaSyBZcQ_niM284xVtAkFEyN4DZ307jcEQnaE",
-	authDomain: "test-8c316.firebaseapp.com",
-	projectId: "test-8c316",
-	storageBucket: "test-8c316.appspot.com",
-	messagingSenderId: "926686997786",
-	appId: "1:926686997786:web:c14c3af1246c967695d0a3",
-	measurementId: "G-GK4YRW1G80",
+	apiKey: "AIzaSyCQTfDxbO4OIvObDcAa_OwNOqT3uK04e2A",
+	authDomain: "earnys.firebaseapp.com",
+	projectId: "earnys",
+	storageBucket: "earnys.appspot.com",
+	messagingSenderId: "527670211353",
+	appId: "1:527670211353:web:65005ba3210eaefd48cb88",
+	measurementId: "G-MC1NMVGRYZ",
 };
 
 export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
