@@ -23,9 +23,10 @@ export const CreateProfile = () => {
 	const [email, onChangeEmail] = useState<string>("");
 	const [formValidated, setFormValidate] = useState<boolean>(false);
 
-	const submit = () => {
+	const submit = ({ name, email, date }) => {
 		router.push({
 			pathname: "/phone_auth/phoneNumberRequest",
+			params: { emoji: selectedIcon, color: selectedColor, name, email, date },
 		});
 	};
 
@@ -34,7 +35,7 @@ export const CreateProfile = () => {
 		if (name.length > 1 && email.length > 1 && date) {
 			setFormValidate(true);
 		} else {
-			setFormValidate(true); //TODO set to false
+			setFormValidate(false);
 		}
 	}, [name, email, date]);
 
@@ -77,14 +78,16 @@ export const CreateProfile = () => {
 								<MainButton
 									text="Next"
 									disabled={!formValidated}
-									onPress={submit}
+									onPress={() =>
+										submit({ name, email, date: date?.toDateString() })
+									}
 								/>
 							</MainButtonContainer>
 
 							<LoginButton
 								onPress={() =>
 									router.push({
-										pathname: "/phone_login/phoneNumberRequest",
+										pathname: "/phone_auth/phoneNumberRequest",
 									})
 								}
 							>

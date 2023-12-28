@@ -10,10 +10,9 @@ import {
 	Title,
 } from "../../components";
 import { Dropdown } from "react-native-element-dropdown";
-import { app, auth } from "../../config";
+import { app } from "../../config";
 import {
 	ConfirmationResult,
-	PhoneAuthProvider,
 	getAuth,
 	signInWithPhoneNumber,
 } from "firebase/auth";
@@ -34,7 +33,6 @@ const PhoneNumberRequest = () => {
 	const [verificationCode, setVerificationCode] = useState<string>("");
 	const [inputCodeScreen, setInputCodeScreen] = useState<boolean>(false);
 	const handlePhoneNumberSubmit = async () => {
-		// const phoneProvider = new PhoneAuthProvider(auth);
 		if (recaptchaVerifier.current) {
 			const authentication = getAuth();
 			signInWithPhoneNumber(
@@ -53,12 +51,6 @@ const PhoneNumberRequest = () => {
 						alert("📞 Please enter a valid phone number.");
 					}
 				});
-			// const verificationId = await phoneProvider.verifyPhoneNumber(
-			// 	`${areaCode}${phoneNumber}`,
-			// 	recaptchaVerifier.current
-			// );
-
-			// setVerificationCode(verificationId);
 		}
 	};
 
@@ -67,7 +59,6 @@ const PhoneNumberRequest = () => {
 			verifier
 				?.confirm(verificationCode)
 				.then((result) => {
-					console.log(result);
 					router.push({
 						pathname: "",
 					});

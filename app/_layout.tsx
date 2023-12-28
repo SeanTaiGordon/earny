@@ -7,7 +7,13 @@ import { Jost_400Regular, Jost_500Medium } from "@expo-google-fonts/jost";
 
 import { Stack } from "expo-router";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+	ApolloClient,
+	ApolloProvider,
+	InMemoryCache,
+	createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { auth } from "../config";
 
 export const UserContext = createContext<User | undefined>(undefined);
@@ -19,9 +25,24 @@ const Layout = () => {
 		Jost_500Medium,
 	});
 
+	const httpLink = createHttpLink({
+		uri: "http://localhost:4000/graphql",
+	});
+
+	const authLink = setContext((_, { headers }) => {
+		// get the authentication token from local storage if it exists
+		// return the headers to the context so httpLink can read them
+		return {
+			headers: {
+				...headers,
+				Token: user?.accessToken ? `${user?.accessToken}` : "",
+			},
+		};
+	});
+
 	// Initialize Apollo Client
 	const client = new ApolloClient({
-		uri: "http://localhost:4000/graphql",
+		link: authLink.concat(httpLink),
 		cache: new InMemoryCache(),
 	});
 

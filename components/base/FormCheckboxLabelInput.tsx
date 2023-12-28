@@ -1,17 +1,23 @@
 import Checkbox from "expo-checkbox";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components/native";
 
 interface Props {
 	label: string;
 	defaultTrue?: boolean;
+	onChange?: (newValue: boolean) => void;
 }
 
 export const FormCheckboxLabelInput = ({
 	label,
 	defaultTrue = false,
+	onChange,
 }: Props) => {
 	const [toggleCheckBox, setToggleCheckBox] = useState(defaultTrue);
+
+	useEffect(() => {
+		onChange && onChange(toggleCheckBox);
+	}, [toggleCheckBox]);
 	return (
 		<Container
 			onPress={() => {

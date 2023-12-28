@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import {
 	KeyboardDismissableView,
 	MainScreenProgressContainer,
@@ -11,9 +11,24 @@ import {
 import styled from "styled-components/native";
 import { ScrollView } from "react-native";
 import { router } from "expo-router";
-import { Button } from "react-native";
+import { gql, useQuery } from "@apollo/client";
+
+const USER_QUERY_SELF = gql`
+	query Self {
+		self {
+			profile {
+				emoji
+				color
+			}
+		}
+	}
+`;
 
 const Main = () => {
+	const userQuery = useQuery(USER_QUERY_SELF);
+
+	const { color, emoji } = userQuery.data?.self?.profile || {};
+
 	return (
 		<ScreenContainer>
 			<KeyboardDismissableView>
@@ -25,8 +40,8 @@ const Main = () => {
 							});
 						}}
 					>
-						<Item background={"#F3A683"}>
-							<ProfileText>🧑‍🎨</ProfileText>
+						<Item background={color}>
+							<ProfileText>{emoji}</ProfileText>
 						</Item>
 					</Profile>
 
