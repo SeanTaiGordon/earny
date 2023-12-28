@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback } from "react";
 import {
 	KeyboardDismissableView,
 	MainScreenProgressContainer,
@@ -9,7 +9,7 @@ import {
 	Title,
 } from "../components";
 import styled from "styled-components/native";
-import { ScrollView } from "react-native";
+import { RefreshControl, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { gql, useQuery } from "@apollo/client";
 
@@ -28,11 +28,24 @@ const Main = () => {
 	const userQuery = useQuery(USER_QUERY_SELF);
 
 	const { color, emoji } = userQuery.data?.self?.profile || {};
+	const [refreshing, setRefreshing] = React.useState(false);
+
+	const onRefresh = useCallback(() => {
+		setRefreshing(true);
+		userQuery.refetch().then(() => {
+			setRefreshing(false);
+		});
+	}, []);
 
 	return (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<ScrollView showsVerticalScrollIndicator={false}>
+				<ScrollView
+					showsVerticalScrollIndicator={false}
+					refreshControl={
+						<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+					}
+				>
 					<Profile
 						onPress={() => {
 							router.push({

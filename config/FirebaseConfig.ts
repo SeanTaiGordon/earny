@@ -9,7 +9,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 // Initialize Firebase
 export const firebaseConfig = {
 	apiKey: "AIzaSyCQTfDxbO4OIvObDcAa_OwNOqT3uK04e2A",
-	authDomain: "earnys.firebaseapp.com",
+	authDomain: "earny.io",
 	projectId: "earnys",
 	storageBucket: "earnys.appspot.com",
 	messagingSenderId: "527670211353",

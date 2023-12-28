@@ -87,7 +87,7 @@ export const CreateProfile = () => {
 							<LoginButton
 								onPress={() =>
 									router.push({
-										pathname: "/phone_auth/phoneNumberRequest",
+										pathname: "/phone_login/phoneNumberRequest",
 									})
 								}
 							>

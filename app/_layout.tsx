@@ -32,12 +32,21 @@ const Layout = () => {
 	const authLink = setContext((_, { headers }) => {
 		// get the authentication token from local storage if it exists
 		// return the headers to the context so httpLink can read them
-		return {
-			headers: {
-				...headers,
-				Token: user?.accessToken ? `${user?.accessToken}` : "",
-			},
-		};
+		return auth.currentUser
+			?.getIdToken()
+			.then((token) => {
+				return {
+					headers: {
+						...headers,
+						Token: token,
+					},
+				};
+			})
+			.catch(() => {
+				return {
+					headers: { ...headers },
+				};
+			});
 	});
 
 	// Initialize Apollo Client

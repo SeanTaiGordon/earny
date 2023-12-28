@@ -4,29 +4,31 @@ import React, { ReactNode } from "react";
 interface Props {
 	onPress?: () => void;
 	children?: ReactNode;
+	centered?: boolean;
 }
 
-export const Profile = ({ onPress, children }: Props) => {
+export const Profile = ({ onPress, children, centered = false }: Props) => {
 	return (
-		<Container>
-			<ProfilePlaceholder onPress={onPress} children={children} />
+		<Container centered={centered}>
+			<ProfilePlaceholder
+				onPress={onPress}
+				children={children}
+				centered={centered}
+			/>
 		</Container>
 	);
 };
 
-const Container = styled.View`
+const Container = styled.View<{ centered }>`
 	display: flex;
-	padding: 30px 30px 57px 0px;
-	justify-content: flex-end;
-	align-items: flex-start;
-	align-self: stretch;
+	padding: 30px ${({ centered }) => (centered ? "0" : "30")}px 57px 0px;
 `;
 
-const ProfilePlaceholder = styled.TouchableOpacity`
+const ProfilePlaceholder = styled.TouchableOpacity<{ centered }>`
 	width: 70px;
 	height: 70px;
 	background: #d9d9d9;
 	border-radius: 50%;
 	display: flex;
-	margin-left: auto;
+	align-self: ${({ centered }) => (centered ? "center" : "flex-end")};
 `;

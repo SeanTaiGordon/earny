@@ -84,7 +84,6 @@ const PhoneNumberRequest = () => {
 		})
 			.then(({ data }) => {
 				const { signup: signupSuccess } = data;
-				console.log(signupSuccess);
 				if (!signupSuccess) {
 					alert(
 						"😢 Signup unsuccessful. An account may already exist for these credentials."
@@ -95,7 +94,6 @@ const PhoneNumberRequest = () => {
 				}
 			})
 			.catch((error) => {
-				console.log(error);
 				alert("😢 Signup unsuccessful. Please try again later.");
 				setLoading(false);
 			});
@@ -104,7 +102,6 @@ const PhoneNumberRequest = () => {
 	const recaptchaSignIn = async () => {
 		if (recaptchaVerifier.current) {
 			const authentication = getAuth();
-			console.log(`+${areaCode}${phoneNumber}`);
 			signInWithPhoneNumber(
 				authentication,
 				`+${areaCode}${phoneNumber}`,
