@@ -10,12 +10,25 @@ import {
 	Title,
 } from "../components";
 import styled from "styled-components/native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { gql, useMutation } from "@apollo/client";
+
+const SET_PREFERRED_ROLES = gql`
+	mutation Mutation($customerSlider: Int!, $availableHoursPerWeek: Int!) {
+		setSliders(
+			customerSlider: $customerSlider
+			availableHoursPerWeek: $availableHoursPerWeek
+		)
+	}
+`;
 
 const PreferredRoles = () => {
+	const { initialHoursSliderValue, initialCustomerFacingSliderValue } =
+		useLocalSearchParams();
 	const [hoursSliderValue, setHoursSliderValue] = useState<number>(0);
 	const [customerFacingSliderValue, setCustomerFacingSliderValue] =
 		useState<number>(0);
+	const [setSliders] = useMutation(SET_PREFERRED_ROLES);
 
 	function nearestValue(value) {
 		if (value <= 25) {
@@ -26,6 +39,17 @@ const PreferredRoles = () => {
 			return 100;
 		}
 	}
+
+	const handleSubmitPreferredRoles = async () => {
+		await setSliders({
+			variables: {
+				customerSlider: parseInt(customerFacingSliderValue.toString()),
+				availableHoursPerWeek: parseInt((hoursSliderValue / 2).toFixed(0)),
+			},
+		});
+
+		initialCustomerFacingSliderValue ? router.back() : router.replace("");
+	};
 
 	return (
 		<ScreenContainer>
@@ -49,7 +73,11 @@ const PreferredRoles = () => {
 							}}
 							numIntervals={1}
 							defaultInterval={1}
-							initialValue={50}
+							initialValue={
+								initialHoursSliderValue
+									? parseInt(initialHoursSliderValue.toString()) * 2
+									: 50
+							}
 						/>
 					</Container>
 
@@ -82,15 +110,17 @@ const PreferredRoles = () => {
 							}}
 							numIntervals={2}
 							defaultInterval={1}
-							initialValue={50}
+							initialValue={
+								initialCustomerFacingSliderValue
+									? parseInt(initialCustomerFacingSliderValue.toString())
+									: 50
+							}
 						/>
 					</Container>
 					<MainButtonContainer>
 						<MainButton
 							text="Next"
-							onPress={() => {
-								router.replace("");
-							}}
+							onPress={() => handleSubmitPreferredRoles()}
 						/>
 					</MainButtonContainer>
 				</PaddedContainer>

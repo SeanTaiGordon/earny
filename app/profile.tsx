@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
 	ScreenContainer,
 	AddButton,
@@ -12,10 +12,11 @@ import {
 	Button,
 } from "../components";
 import { auth } from "../config";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { gql, useQuery } from "@apollo/client";
 import styled from "styled-components/native";
 import LogoutIcon from "react-native-bootstrap-icons/icons/box-arrow-right";
+import SettingsIcon from "react-native-bootstrap-icons/icons/gear-fill";
 
 const USER_QUERY_SELF = gql`
 	query Query {
@@ -38,7 +39,8 @@ const USER_QUERY_SELF = gql`
 `;
 
 export const Profile = () => {
-	const { data } = useQuery(USER_QUERY_SELF);
+	const { data, refetch } = useQuery(USER_QUERY_SELF);
+
 	const {
 		dateOfBirth,
 		email,
@@ -51,6 +53,10 @@ export const Profile = () => {
 
 	const { emoji, color } = profile || {};
 
+	useFocusEffect(() => {
+		refetch();
+	});
+
 	return (
 		<ScreenContainer>
 			<PaddedContainer>
@@ -61,14 +67,61 @@ export const Profile = () => {
 						<ProfileText>{emoji}</ProfileText>
 					</Item>
 				</ProfileComponent>
-				<SecondaryHeader>{fullName}</SecondaryHeader>
-				<SecondaryHeader>{email}</SecondaryHeader>
 				<SecondaryHeader>
-					+{phone?.areaCode} {phone?.phoneNumber}
+					<Bold>{fullName}</Bold>
+				</SecondaryHeader>
+				<SecondaryHeader>📬 {email}</SecondaryHeader>
+				<SecondaryHeader>
+					📞 +{phone?.areaCode} {phone?.phoneNumber}
 				</SecondaryHeader>
 				<SecondaryHeader>
-					{dateOfBirth && new Date(dateOfBirth).toLocaleDateString()}
+					🎂 {dateOfBirth && new Date(dateOfBirth).toLocaleDateString()}
 				</SecondaryHeader>
+
+				<PaddedContainer>
+					{availableHoursPerWeek && (
+						<SecondaryHeader>
+							I have time to work <Bold>{availableHoursPerWeek}</Bold> hours per
+							week.
+						</SecondaryHeader>
+					)}
+					{customerSlider !== null && (
+						<SecondaryHeader>
+							{
+								{
+									0: (
+										<>
+											I'm <Bold>not fond</Bold> of customer facing roles
+										</>
+									),
+									50: (
+										<>
+											I'm <Bold>indifferent</Bold> to customer facing roles
+										</>
+									),
+									100: (
+										<>
+											I <Bold>enjoy</Bold> customer facing roles
+										</>
+									),
+								}[customerSlider]
+							}
+						</SecondaryHeader>
+					)}
+				</PaddedContainer>
+				<Button
+					title={"Modify preferences"}
+					onPress={() =>
+						router.push({
+							pathname: "/preferredRoles",
+							params: {
+								initialHoursSliderValue: availableHoursPerWeek,
+								initialCustomerFacingSliderValue: customerSlider,
+							},
+						})
+					}
+					Icon={SettingsIcon}
+				/>
 			</PaddedContainer>
 			<PaddedContainer>
 				<Button
@@ -107,6 +160,15 @@ const SecondaryHeader = styled.Text`
 	font-family: Jost_400Regular;
 	font-size: 18px;
 	font-weight: 400;
+`;
+
+const Bold = styled.Text`
+	font-family: Jost_500Medium;
+`;
+
+const Container = styled.View`
+	padding-top: 30px;
+	padding-bottom: 30px;
 `;
 
 export default Profile;
