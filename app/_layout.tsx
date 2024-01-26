@@ -14,7 +14,7 @@ import {
 	createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { auth } from "../config";
+import { app, auth } from "../config";
 
 export const UserContext = createContext<User | undefined>(undefined);
 

@@ -3,10 +3,10 @@ import { ScrollView } from "react-native";
 import styled from "styled-components/native";
 
 interface Props {
-	selectorColor?: String;
-	getSelectedIcon: String;
-	getColor: String;
-	onIconSelect: (selectedIcon) => void;
+	selectorColor?: string;
+	getSelectedIcon: string;
+	getColor: string;
+	onIconSelect: (selectedIcon: string) => void;
 }
 
 export const EmojiScrollSelector = ({
@@ -15,7 +15,7 @@ export const EmojiScrollSelector = ({
 	getColor,
 	onIconSelect,
 }: Props) => {
-	const [scrollWidth, setScrollWidth] = useState<Number>(0);
+	const [scrollWidth, setScrollWidth] = useState<number>(0); // Change type from Number to number
 	const scrollView = useRef<ScrollView>(null);
 	const items = ["🧑‍💻", "🧑‍🎓", "🧑‍🔬", "🧑‍🎨", "🧑‍🌾", "🧑‍🏫", "🧑‍💼", "🧙", "🦹", "🤵"];
 
@@ -57,7 +57,7 @@ export const EmojiScrollSelector = ({
 					</Item>
 				))}
 
-				<Padding scrollWidth={scrollWidth} />
+				<Padding scrollWidth={scrollWidth as number} />
 			</ScrollView>
 		</Container>
 	);
@@ -73,7 +73,7 @@ const Container = styled.View`
 const ItemText = styled.Text`
 	font-size: 40px;
 `;
-const Item = styled.TouchableOpacity<{ background }>`
+const Item = styled.TouchableOpacity<{ background: string }>`
 	background-color: ${({ background }) => background};
 	margin-left: 5px;
 	margin-right: 5px;
@@ -86,6 +86,6 @@ const Item = styled.TouchableOpacity<{ background }>`
 	border-radius: 50%;
 `;
 
-const Padding = styled.View<{ scrollWidth }>`
+const Padding = styled.View<{ scrollWidth: number }>`
 	width: ${({ scrollWidth }) => scrollWidth - 80 + "px"};
 `;

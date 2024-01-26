@@ -120,7 +120,7 @@ const ProfileText = styled.Text`
 	font-size: 40px;
 `;
 
-const Item = styled.View<{ background }>`
+const Item = styled.View<{ background: string }>`
 	background-color: ${({ background }) => background};
 	margin-left: 5px;
 	margin-right: 5px;

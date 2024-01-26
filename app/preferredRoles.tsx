@@ -30,7 +30,7 @@ const PreferredRoles = () => {
 		useState<number>(0);
 	const [setSliders] = useMutation(SET_PREFERRED_ROLES);
 
-	function nearestValue(value) {
+	function nearestValue(value: number) {
 		if (value <= 25) {
 			return 0;
 		} else if (value <= 75) {

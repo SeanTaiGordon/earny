@@ -14,7 +14,7 @@ export const ColorScrollSelector = ({
 	getColor,
 	getSelectedIcon,
 }: Props) => {
-	const [scrollWidth, setScrollWidth] = useState<Number>(0);
+	const [scrollWidth, setScrollWidth] = useState<number>(0);
 	const scrollView = useRef<ScrollView>(null);
 	const items = [
 		"#d9d9d9",
@@ -88,7 +88,7 @@ const Tick = styled(TickIcon)`
 	flex: 1;
 `;
 
-const Item = styled.TouchableOpacity<{ color }>`
+const Item = styled.TouchableOpacity<{ color: string }>`
 	background: ${({ color }) => color};
 	width: 70px;
 	height: 70px;
@@ -100,6 +100,6 @@ const Item = styled.TouchableOpacity<{ color }>`
 	flex: 1;
 `;
 
-const Padding = styled.View<{ scrollWidth }>`
+const Padding = styled.View<{ scrollWidth: number }>`
 	width: ${({ scrollWidth }) => scrollWidth - 80 + "px"};
 `;

@@ -19,11 +19,9 @@ export const firebaseConfig = {
 
 export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
-export const auth = !getApps().length
-	? initializeAuth(app, {
-			persistence: getReactNativePersistence(ReactNativeAsyncStorage),
-	  })
-	: getAuth(app);
+export const auth = initializeAuth(app, {
+	persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+});
 
 // For more information on how to access Firebase in your project,
 // see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
