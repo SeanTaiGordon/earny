@@ -71,8 +71,7 @@ const Main = () => {
 							<Title>Next step: matched</Title>
 							<Text purple>
 								Once we find the perfect job match for you, we'll send you a
-								notification and you can interview to see whether it's a good
-								fit
+								notification and you can decide to see whether it's a good fit!
 							</Text>
 						</MainScreenProgressContainer>
 
