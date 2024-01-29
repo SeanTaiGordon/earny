@@ -12,7 +12,7 @@ import {
 } from "../../components";
 import { Dropdown } from "react-native-element-dropdown";
 import styled from "styled-components/native";
-import { router, useLocalSearchParams } from "expo-router";
+import { Link, router, useLocalSearchParams } from "expo-router";
 import { phonePrefixes } from "../../constants";
 import { View } from "react-native";
 import ArrowRepeatIcon from "react-native-bootstrap-icons/icons/arrow-repeat";
@@ -238,6 +238,14 @@ const PhoneNumberRequest = () => {
 						}}
 						disabled={loading}
 					/>
+					<Container>
+						<Label>
+							By continuing, you agree to our{" "}
+							<Link href={"https://earny.io/termsandconditions"}>
+								<LinkLabel>terms and conditions.</LinkLabel>
+							</Link>
+						</Label>
+					</Container>
 					<FirebaseRecaptchaVerifierModal
 						ref={recaptchaVerifier}
 						firebaseConfig={app.options}
@@ -264,6 +272,13 @@ const styles = {
 const CheckboxContainer = styled.View`
 	padding-top: 10px;
 	padding-bottom: 30px;
+	color: #676767;
+`;
+
+const Label = styled.Text`
+	padding-left: 10px;
+	font-size: 14px;
+	font-family: Jost_400Regular;
 	color: #676767;
 `;
 
@@ -294,6 +309,14 @@ const RefreshButtonContainer = styled.TouchableOpacity`
 	border-radius: 10px;
 	background: #eaeaea;
 	align-self: center;
+`;
+
+const LinkLabel = styled.Text`
+	color: #8e4dff;
+	font-weight: 400;
+	line-height: 33px;
+	text-decoration: underline;
+	text-decoration-color: #8e4dff;
 `;
 
 const ButtonText = styled.Text`
