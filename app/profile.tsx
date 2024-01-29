@@ -1,12 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import {
 	ScreenContainer,
-	AddButton,
 	NavBackButton,
-	EmojiScrollSelector,
-	ColorScrollSelector,
 	PaddedContainer,
-	Subtitle,
 	Profile as ProfileComponent,
 	Title,
 	Button,
@@ -17,6 +13,8 @@ import { gql, useQuery } from "@apollo/client";
 import styled from "styled-components/native";
 import LogoutIcon from "react-native-bootstrap-icons/icons/box-arrow-right";
 import SettingsIcon from "react-native-bootstrap-icons/icons/gear-fill";
+import ReferralIcon from "react-native-bootstrap-icons/icons/person-plus";
+import { ScrollView } from "react-native";
 
 const USER_QUERY_SELF = gql`
 	query Query {
@@ -59,87 +57,101 @@ export const Profile = () => {
 
 	return (
 		<ScreenContainer>
-			<PaddedContainer>
-				<NavBackButton />
-				<Title>Your profile</Title>
-				<ProfileComponent centered>
-					<Item background={color}>
-						<ProfileText>{emoji}</ProfileText>
-					</Item>
-				</ProfileComponent>
-				<SecondaryHeader>
-					<Bold>{fullName}</Bold>
-				</SecondaryHeader>
-				<SecondaryHeader>📬 {email}</SecondaryHeader>
-				<SecondaryHeader>
-					📞 +{phone?.areaCode} {phone?.phoneNumber}
-				</SecondaryHeader>
-				<SecondaryHeader>
-					🎂 {dateOfBirth && new Date(dateOfBirth).toLocaleDateString()}
-				</SecondaryHeader>
-
+			<ScrollView showsVerticalScrollIndicator={false}>
 				<PaddedContainer>
-					{availableHoursPerWeek && (
-						<SecondaryHeader>
-							I have time to work <Bold>{availableHoursPerWeek}</Bold> hours per
-							week.
-						</SecondaryHeader>
-					)}
-					{customerSlider !== null && (
-						<SecondaryHeader>
-							{
+					<NavBackButton />
+					<Title>Your profile</Title>
+					<ProfileComponent centered>
+						<Item background={color}>
+							<ProfileText>{emoji}</ProfileText>
+						</Item>
+					</ProfileComponent>
+					<SecondaryHeader>
+						<Bold>{fullName}</Bold>
+					</SecondaryHeader>
+					<SecondaryHeader>📬 {email}</SecondaryHeader>
+					<SecondaryHeader>
+						📞 +{phone?.areaCode} {phone?.phoneNumber}
+					</SecondaryHeader>
+					<SecondaryHeader>
+						🎂 {dateOfBirth && new Date(dateOfBirth).toLocaleDateString()}
+					</SecondaryHeader>
+
+					<PaddedContainer>
+						{availableHoursPerWeek && (
+							<SecondaryHeader>
+								I have time to work <Bold>{availableHoursPerWeek}</Bold> hours
+								per week.
+							</SecondaryHeader>
+						)}
+						{customerSlider !== null && (
+							<SecondaryHeader>
 								{
-									0: (
-										<>
-											I'm <Bold>not fond</Bold> of customer facing roles
-										</>
-									),
-									50: (
-										<>
-											I'm <Bold>indifferent</Bold> to customer facing roles
-										</>
-									),
-									100: (
-										<>
-											I <Bold>enjoy</Bold> customer facing roles
-										</>
-									),
-								}[
-									customerSlider as keyof {
-										0: JSX.Element;
-										50: JSX.Element;
-										100: JSX.Element;
-									}
-								]
+									{
+										0: (
+											<>
+												I'm <Bold>not fond</Bold> of customer facing roles
+											</>
+										),
+										50: (
+											<>
+												I'm <Bold>indifferent</Bold> to customer facing roles
+											</>
+										),
+										100: (
+											<>
+												I <Bold>enjoy</Bold> customer facing roles
+											</>
+										),
+									}[
+										customerSlider as keyof {
+											0: JSX.Element;
+											50: JSX.Element;
+											100: JSX.Element;
+										}
+									]
+								}
+							</SecondaryHeader>
+						)}
+					</PaddedContainer>
+					<Button
+						title={"Modify preferences"}
+						onPress={() =>
+							router.push({
+								pathname: "/preferredRoles",
+								params: {
+									initialHoursSliderValue: availableHoursPerWeek,
+									initialCustomerFacingSliderValue: customerSlider,
+								},
+							})
+						}
+						Icon={SettingsIcon}
+					/>
+
+					<Container>
+						<Button
+							title={"Refer someone"}
+							onPress={() =>
+								router.push({
+									pathname: "/referUser",
+								})
 							}
-						</SecondaryHeader>
-					)}
+							Icon={ReferralIcon}
+						/>
+					</Container>
 				</PaddedContainer>
-				<Button
-					title={"Modify preferences"}
-					onPress={() =>
-						router.push({
-							pathname: "/preferredRoles",
-							params: {
-								initialHoursSliderValue: availableHoursPerWeek,
-								initialCustomerFacingSliderValue: customerSlider,
-							},
-						})
-					}
-					Icon={SettingsIcon}
-				/>
-			</PaddedContainer>
-			<PaddedContainer>
-				<Button
-					title={"Logout"}
-					onPress={() =>
-						auth.signOut().then(() => {
-							router.back();
-						})
-					}
-					Icon={LogoutIcon}
-				/>
-			</PaddedContainer>
+				<PaddedContainer>
+					<Button
+						title={"Logout"}
+						onPress={() =>
+							auth.signOut().then(() => {
+								router.back();
+							})
+						}
+						Icon={LogoutIcon}
+					/>
+				</PaddedContainer>
+			</ScrollView>
 		</ScreenContainer>
 	);
 };

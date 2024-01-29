@@ -33,6 +33,7 @@ const SIGNUP = gql`
 		$dateOfBirth: Date!
 		$phone: PhoneNumber!
 		$contactPermissions: ContactPermissions!
+		$referral: Referral!
 	) {
 		signup(
 			profile: $profile
@@ -41,12 +42,14 @@ const SIGNUP = gql`
 			dateOfBirth: $dateOfBirth
 			phone: $phone
 			contactPermissions: $contactPermissions
+			referral: $referral
 		)
 	}
 `;
 
 const PhoneNumberRequest = () => {
-	const { emoji, color, name, email, date } = useLocalSearchParams();
+	const { emoji, color, name, email, date, referralCode } =
+		useLocalSearchParams();
 	const [signup] = useMutation(SIGNUP);
 
 	const recaptchaVerifier = useRef<FirebaseRecaptchaVerifierModal | null>(null);
@@ -79,6 +82,9 @@ const PhoneNumberRequest = () => {
 						sms: canTextApplicant,
 						call: canCallApplicant,
 					},
+				},
+				referral: {
+					referrer: referralCode,
 				},
 			},
 		})

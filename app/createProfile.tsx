@@ -16,16 +16,39 @@ import { DatePicker } from "../components/DatePicker";
 import { router } from "expo-router";
 
 export const CreateProfile = () => {
-	const [selectedColor, setSelectedColor] = useState<String>("#d9d9d9");
-	const [selectedIcon, setSelectedIcon] = useState<String>("🧑‍💻");
+	const [selectedColor, setSelectedColor] = useState<string>("#d9d9d9");
+	const [selectedIcon, setSelectedIcon] = useState<string>("🧑‍💻");
 	const [date, setDate] = useState<Date>();
 	const [name, onChangeName] = useState<string>("");
 	const [email, onChangeEmail] = useState<string>("");
 	const [formValidated, setFormValidate] = useState<boolean>(false);
 
-	const submit = ({ name, email, date }) => {
+	const submit = ({
+		name,
+		email,
+		date,
+	}: {
+		name: string;
+		email: string;
+		date: string | undefined;
+	}) => {
 		router.push({
 			pathname: "/phone_auth/phoneNumberRequest",
+			params: { emoji: selectedIcon, color: selectedColor, name, email, date },
+		});
+	};
+
+	const addReferral = ({
+		name,
+		email,
+		date,
+	}: {
+		name: string;
+		email: string;
+		date: string | undefined;
+	}) => {
+		router.push({
+			pathname: "/addReferralCode",
 			params: { emoji: selectedIcon, color: selectedColor, name, email, date },
 		});
 	};
@@ -47,7 +70,7 @@ export const CreateProfile = () => {
 						<PaddedContainer>
 							<Title>📝 Let’s create your profile</Title>
 							<EmojiScrollSelector
-								selectorColor={selectedColor}
+								selectorColor={selectedColor as string}
 								getSelectedIcon={selectedIcon}
 								onIconSelect={setSelectedIcon}
 								getColor={selectedColor}
@@ -73,6 +96,21 @@ export const CreateProfile = () => {
 								onChangeText={(text) => onChangeEmail(text)}
 								value={email}
 							/>
+							<ReferralButton
+								onPress={() => {
+									if (formValidated) {
+										addReferral({
+											name,
+											email,
+											date: date?.toDateString(),
+										});
+									} else {
+										alert("✍️ Please fill out the form first");
+									}
+								}}
+							>
+								<ReferralCodeText>I have a referral code</ReferralCodeText>
+							</ReferralButton>
 
 							<MainButtonContainer>
 								<MainButton
@@ -109,6 +147,19 @@ const MainButtonContainer = styled.View`
 
 const LoginButton = styled.TouchableOpacity`
 	padding-top: 30px;
+`;
+
+const ReferralButton = styled.TouchableOpacity``;
+
+const ReferralCodeText = styled.Text`
+	color: #8e4dff;
+	font-family: Jost_400Regular;
+	font-size: 16px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 33px;
+	text-decoration: underline;
+	text-decoration-color: #8e4dff;
 `;
 
 const LoginButtonText = styled.Text`
