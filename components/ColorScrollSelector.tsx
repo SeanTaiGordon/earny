@@ -74,7 +74,7 @@ export const ColorScrollSelector = ({
 
 const Container = styled.View`
 	min-height: 80px;
-	margin-top: 20px;
+	margin-top: 10px;
 	margin-bottom: 20px;
 	scroll-snap-align: center;
 `;

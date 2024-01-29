@@ -66,7 +66,7 @@ export const EmojiScrollSelector = ({
 const Container = styled.View`
 	min-height: 80px;
 	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 	scroll-snap-align: center;
 `;
 
