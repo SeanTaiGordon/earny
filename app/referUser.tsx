@@ -48,8 +48,9 @@ export const ReferUser = () => {
 							<ShareButton
 								onPress={() =>
 									Share.share({
-										message:
-											"Flexibly earn money on your own terms. Sign up with my referral code XXX to get started.",
+										title: "Earny referral code",
+										message: `Flexibly earn money on your own terms. Sign up with my referral code ${referralCode} to get started. Download at https://earny.io/download`,
+										url: "https://earny.io/download",
 									})
 								}
 							>
@@ -82,7 +83,7 @@ const Padding = styled.View`
 const ShareButton = styled.TouchableOpacity`
 	background: #8e4dff;
 	padding: 10px;
-	border-radius: 15px;
+	border-radius: 8px;
 	margin-left: 10px;
 	flex-direction: row;
 	align-items: center;
@@ -98,7 +99,7 @@ const GreyTitle = styled(Title)`
 const WhiteFilledContainer = styled.View`
 	background: #fff;
 	padding: 20px;
-	border-radius: 15px;
+	border-radius: 10px;
 	display: flex;
 	flex-direction: row;
 `;
