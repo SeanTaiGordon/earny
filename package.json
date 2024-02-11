@@ -1,6 +1,6 @@
 {
 	"name": "earny",
-	"version": "1.0.1",
+	"version": "1.0.1", 
 	"main": "index",
 	"scripts": {
 		"start": "expo start --dev-client",
