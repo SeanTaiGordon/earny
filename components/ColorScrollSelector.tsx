@@ -93,7 +93,7 @@ const Item = styled.TouchableOpacity<{ color: string }>`
 	width: 70px;
 	height: 70px;
 	margin: 5px;
-	border-radius: 50%;
+	border-radius: 35px;
 	align-self: center;
 	align-items: center;
 	justify-content: center;

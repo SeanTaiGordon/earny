@@ -28,7 +28,7 @@ const ProfilePlaceholder = styled.TouchableOpacity<{ centered: boolean }>`
 	width: 70px;
 	height: 70px;
 	background: #d9d9d9;
-	border-radius: 50%;
+	border-radius: 35px;
 	display: flex;
 	align-self: ${({ centered }) => (centered ? "center" : "flex-end")};
 `;

@@ -170,7 +170,7 @@ const Item = styled.View<{ background: string }>`
 	align-items: center;
 	justify-content: center;
 	flex: 1;
-	border-radius: 50%;
+	border-radius: 35px;
 `;
 
 const SecondaryHeader = styled.Text`

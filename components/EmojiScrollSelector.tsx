@@ -83,7 +83,7 @@ const Item = styled.TouchableOpacity<{ background: string }>`
 	align-items: center;
 	justify-content: center;
 	flex: 1;
-	border-radius: 50%;
+	border-radius: 35px;
 `;
 
 const Padding = styled.View<{ scrollWidth: number }>`
