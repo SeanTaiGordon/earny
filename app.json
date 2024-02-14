@@ -1,12 +1,12 @@
 {
 	"expo": {
 		"name": "Earny",
-		"slug": "Earny",
-		"version": "1.0.1",
+		"slug": "earny",
+		"version": "1.0.3",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
-		"userInterfaceStyle": "automatic",
-		"scheme": "io.earny.earny",
+		"userInterfaceStyle": "light",
+		"scheme": "earny",
 		"splash": {
 			"image": "./assets/splash.png",
 			"resizeMode": "cover",
@@ -14,26 +14,19 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": false,
+			"supportsTablet": true,
 			"bundleIdentifier": "io.Earny.Earny"
 		},
 		"android": {
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			},
-			"package": "io.earny.earny"
+			}
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"
 		},
 		"plugins": [
-			[
-				"expo-router",
-				{
-					"origin": "./assets"
-				}
-			],
 			[
 				"expo-build-properties",
 				{
@@ -44,11 +37,8 @@
 			]
 		],
 		"extra": {
-			"router": {
-				"origin": "./assets"
-			},
 			"eas": {
-				"projectId": "4dfd197c-ef0e-4e99-840b-843cbc6018d2"
+				"projectId": "2d41210b-be24-4ae0-9662-63009061cdac"
 			}
 		}
 	}
