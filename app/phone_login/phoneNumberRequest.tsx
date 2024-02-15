@@ -22,6 +22,7 @@ import ArrowRepeatIcon from "react-native-bootstrap-icons/icons/arrow-repeat";
 import { router } from "expo-router";
 import { View } from "react-native";
 import { phonePrefixes } from "../../constants";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const PhoneNumberRequest = () => {
 	const recaptchaVerifier = useRef<FirebaseRecaptchaVerifierModal | null>(null);
@@ -72,78 +73,85 @@ const PhoneNumberRequest = () => {
 	return inputCodeScreen ? (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<PaddedContainer>
-					<NavBackButton onPress={() => setInputCodeScreen(false)} />
-					<Title>☎️ Check your phone </Title>
-					<Subtitle>We just texted you a confirmation code.</Subtitle>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+					<PaddedContainer>
+						<NavBackButton onPress={() => setInputCodeScreen(false)} />
+						<Title>☎️ Check your phone </Title>
+						<Subtitle>We just texted you a confirmation code.</Subtitle>
 
-					<View>
-						<FormTextInput
-							placeholder="Confirmation code"
-							autoComplete="one-time-code"
-							onChangeText={setVerificationCode}
-						/>
-
-						<RefreshButtonContainer
-							onPressOut={() => setInputCodeScreen(false)}
-						>
-							<ArrowRepeatIcon
-								color="#000"
-								height="21"
-								width="21"
-								viewBox="0 0 16 16"
-								style={{ flex: 1 }}
+						<View>
+							<FormTextInput
+								placeholder="Confirmation code"
+								autoComplete="one-time-code"
+								onChangeText={setVerificationCode}
 							/>
-							<ButtonText>Request new code</ButtonText>
-						</RefreshButtonContainer>
-					</View>
 
-					<MainButtonContainer>
-						<MainButton
-							text="Confirm"
-							onPress={() => {
-								handlePhoneCodeSubmit();
-							}}
-						/>
-					</MainButtonContainer>
-				</PaddedContainer>
+							<RefreshButtonContainer
+								onPressOut={() => setInputCodeScreen(false)}
+							>
+								<ArrowRepeatIcon
+									color="#000"
+									height="21"
+									width="21"
+									viewBox="0 0 16 16"
+									style={{ flex: 1 }}
+								/>
+								<ButtonText>Request new code</ButtonText>
+							</RefreshButtonContainer>
+						</View>
+
+						<MainButtonContainer>
+							<MainButton
+								text="Confirm"
+								onPress={() => {
+									handlePhoneCodeSubmit();
+								}}
+							/>
+						</MainButtonContainer>
+					</PaddedContainer>
+				</KeyboardAwareScrollView>
 			</KeyboardDismissableView>
 		</ScreenContainer>
 	) : (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<PaddedContainer>
-					<NavBackButton />
-					<Title>☎️ Login with your phone number </Title>
-					<Subtitle>We'll send you a login code.</Subtitle>
-					<Container>
-						<Dropdown
-							style={styles.CountryDropdown}
-							containerStyle={styles.CountryDropdownContainer}
-							data={phonePrefixes}
-							labelField="label"
-							valueField="value"
-							onChange={(value) => {
-								setAreaCode(`+${value.value}`);
-							}}
-							placeholder={String(phonePrefixes[0].label)}
-							fontFamily="Jost_400Regular"
-						/>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+					<PaddedContainer>
+						<NavBackButton />
+						<Title>☎️ Login with your phone number </Title>
+						<Subtitle>We'll send you a login code.</Subtitle>
+						<Container>
+							<Dropdown
+								style={styles.CountryDropdown}
+								containerStyle={styles.CountryDropdownContainer}
+								data={phonePrefixes}
+								labelField="label"
+								valueField="value"
+								onChange={(value) => {
+									setAreaCode(`+${value.value}`);
+								}}
+								placeholder={String(phonePrefixes[0].label)}
+								fontFamily="Jost_400Regular"
+							/>
 
-						<TelInput
-							placeholder="Phone number"
-							keyboardType="phone-pad"
-							autoComplete="tel"
-							returnKeyType="done"
-							onChangeText={setPhoneNumber}
+							<TelInput
+								placeholder="Phone number"
+								keyboardType="phone-pad"
+								autoComplete="tel"
+								returnKeyType="done"
+								onChangeText={setPhoneNumber}
+							/>
+						</Container>
+						<MainButton
+							text="Send me a text"
+							onPress={handlePhoneNumberSubmit}
 						/>
-					</Container>
-					<MainButton text="Send me a text" onPress={handlePhoneNumberSubmit} />
-					<FirebaseRecaptchaVerifierModal
-						ref={recaptchaVerifier}
-						firebaseConfig={app.options}
-					/>
-				</PaddedContainer>
+						<FirebaseRecaptchaVerifierModal
+							ref={recaptchaVerifier}
+							firebaseConfig={app.options}
+						/>
+					</PaddedContainer>
+				</KeyboardAwareScrollView>
 			</KeyboardDismissableView>
 		</ScreenContainer>
 	);

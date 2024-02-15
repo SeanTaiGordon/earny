@@ -9,7 +9,6 @@ import {
 	EmojiScrollSelector,
 	MainButton,
 } from "../components";
-import { ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styled from "styled-components/native";
 import { DatePicker } from "../components/DatePicker";
@@ -65,76 +64,74 @@ export const CreateProfile = () => {
 	return (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<KeyboardAwareScrollView>
-					<ScrollView showsVerticalScrollIndicator={false}>
-						<PaddedContainer>
-							<Title>📝 Let’s create your profile</Title>
-							<EmojiScrollSelector
-								selectorColor={selectedColor as string}
-								getSelectedIcon={selectedIcon}
-								onIconSelect={setSelectedIcon}
-								getColor={selectedColor}
-							/>
-							<ColorScrollSelector
-								onColorChange={setSelectedColor}
-								getColor={selectedColor}
-								getSelectedIcon={selectedIcon}
-							/>
-							<FormTextInput
-								placeholder="Full name*"
-								autoComplete="name"
-								inputMode="text"
-								onChangeText={(text) => onChangeName(text)}
-								value={name}
-							/>
-							<DatePicker getDate={(date) => setDate(date)} />
-							<FormTextInput
-								placeholder="Email*"
-								autoComplete="email"
-								inputMode="email"
-								keyboardType="email-address"
-								onChangeText={(text) => onChangeEmail(text)}
-								value={email}
-							/>
-							<ReferralButton
-								onPress={() => {
-									if (formValidated) {
-										addReferral({
-											name,
-											email,
-											date: date?.toDateString(),
-										});
-									} else {
-										alert("✍️ Please fill out the form first");
-									}
-								}}
-							>
-								<ReferralCodeText>I have a referral code</ReferralCodeText>
-							</ReferralButton>
-
-							<MainButtonContainer>
-								<MainButton
-									text="Next"
-									disabled={!formValidated}
-									onPress={() =>
-										submit({ name, email, date: date?.toDateString() })
-									}
-								/>
-							</MainButtonContainer>
-
-							<LoginButton
-								onPress={() =>
-									router.push({
-										pathname: "/phone_login/phoneNumberRequest",
-									})
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+					<PaddedContainer>
+						<Title>📝 Let’s create your profile</Title>
+						<EmojiScrollSelector
+							selectorColor={selectedColor as string}
+							getSelectedIcon={selectedIcon}
+							onIconSelect={setSelectedIcon}
+							getColor={selectedColor}
+						/>
+						<ColorScrollSelector
+							onColorChange={setSelectedColor}
+							getColor={selectedColor}
+							getSelectedIcon={selectedIcon}
+						/>
+						<FormTextInput
+							placeholder="Full name*"
+							autoComplete="name"
+							inputMode="text"
+							onChangeText={(text) => onChangeName(text)}
+							value={name}
+						/>
+						<DatePicker getDate={(date) => setDate(date)} />
+						<FormTextInput
+							placeholder="Email*"
+							autoComplete="email"
+							inputMode="email"
+							keyboardType="email-address"
+							onChangeText={(text) => onChangeEmail(text)}
+							value={email}
+						/>
+						<ReferralButton
+							onPress={() => {
+								if (formValidated) {
+									addReferral({
+										name,
+										email,
+										date: date?.toDateString(),
+									});
+								} else {
+									alert("✍️ Please fill out the form first");
 								}
-							>
-								<LoginButtonText>
-									Already have an account? Login here
-								</LoginButtonText>
-							</LoginButton>
-						</PaddedContainer>
-					</ScrollView>
+							}}
+						>
+							<ReferralCodeText>I have a referral code</ReferralCodeText>
+						</ReferralButton>
+
+						<MainButtonContainer>
+							<MainButton
+								text="Next"
+								disabled={!formValidated}
+								onPress={() =>
+									submit({ name, email, date: date?.toDateString() })
+								}
+							/>
+						</MainButtonContainer>
+
+						<LoginButton
+							onPress={() =>
+								router.push({
+									pathname: "/phone_login/phoneNumberRequest",
+								})
+							}
+						>
+							<LoginButtonText>
+								Already have an account? Login here
+							</LoginButtonText>
+						</LoginButton>
+					</PaddedContainer>
 				</KeyboardAwareScrollView>
 			</KeyboardDismissableView>
 		</ScreenContainer>

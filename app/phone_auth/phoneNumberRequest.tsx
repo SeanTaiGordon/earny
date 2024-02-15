@@ -24,6 +24,7 @@ import {
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { gql, useMutation } from "@apollo/client";
 import { app } from "../../config";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SIGNUP = gql`
 	mutation Signup(
@@ -150,107 +151,111 @@ const PhoneNumberRequest = () => {
 	return inputCodeScreen ? (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<PaddedContainer>
-					<NavBackButton onPress={() => setInputCodeScreen(false)} />
-					<Title>☎️ Check your phone </Title>
-					<Subtitle>We just texted you a confirmation code.</Subtitle>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+					<PaddedContainer>
+						<NavBackButton onPress={() => setInputCodeScreen(false)} />
+						<Title>☎️ Check your phone </Title>
+						<Subtitle>We just texted you a confirmation code.</Subtitle>
 
-					<View>
-						<FormTextInput
-							placeholder="Confirmation code"
-							autoComplete="one-time-code"
-							onChangeText={setVerificationCode}
-						/>
-
-						<RefreshButtonContainer
-							onPressOut={() => setInputCodeScreen(false)}
-						>
-							<ArrowRepeatIcon
-								color="#000"
-								height="21"
-								width="21"
-								viewBox="0 0 16 16"
-								style={{ flex: 1 }}
+						<View>
+							<FormTextInput
+								placeholder="Confirmation code"
+								autoComplete="one-time-code"
+								onChangeText={setVerificationCode}
 							/>
-							<ButtonText>Request new code</ButtonText>
-						</RefreshButtonContainer>
-					</View>
 
-					<MainButtonContainer>
-						<MainButton
-							text="Confirm"
-							onPress={() => {
-								handlePhoneCodeSubmit();
-							}}
-							disabled={loading}
-						/>
-					</MainButtonContainer>
-				</PaddedContainer>
+							<RefreshButtonContainer
+								onPressOut={() => setInputCodeScreen(false)}
+							>
+								<ArrowRepeatIcon
+									color="#000"
+									height="21"
+									width="21"
+									viewBox="0 0 16 16"
+									style={{ flex: 1 }}
+								/>
+								<ButtonText>Request new code</ButtonText>
+							</RefreshButtonContainer>
+						</View>
+
+						<MainButtonContainer>
+							<MainButton
+								text="Confirm"
+								onPress={() => {
+									handlePhoneCodeSubmit();
+								}}
+								disabled={loading}
+							/>
+						</MainButtonContainer>
+					</PaddedContainer>
+				</KeyboardAwareScrollView>
 			</KeyboardDismissableView>
 		</ScreenContainer>
 	) : (
 		<ScreenContainer>
 			<KeyboardDismissableView>
-				<PaddedContainer>
-					<NavBackButton />
-					<Title>☎️ What's your phone number </Title>
-					<Subtitle>
-						We're helping you keep your account in your hands.
-					</Subtitle>
-					<Container>
-						<Dropdown
-							style={styles.CountryDropdown}
-							containerStyle={styles.CountryDropdownContainer}
-							data={phonePrefixes}
-							labelField="label"
-							valueField="value"
-							onChange={(value) => {
-								setAreaCode(`${value.value}`);
-							}}
-							placeholder={String(phonePrefixes[0].label)}
-							fontFamily="Jost_400Regular"
-						/>
+				<KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+					<PaddedContainer>
+						<NavBackButton />
+						<Title>☎️ What's your phone number </Title>
+						<Subtitle>
+							We're helping you keep your account in your hands.
+						</Subtitle>
+						<Container>
+							<Dropdown
+								style={styles.CountryDropdown}
+								containerStyle={styles.CountryDropdownContainer}
+								data={phonePrefixes}
+								labelField="label"
+								valueField="value"
+								onChange={(value) => {
+									setAreaCode(`${value.value}`);
+								}}
+								placeholder={String(phonePrefixes[0].label)}
+								fontFamily="Jost_400Regular"
+							/>
 
-						<TelInput
-							placeholder="Phone number"
-							keyboardType="phone-pad"
-							autoComplete="tel"
-							returnKeyType="done"
-							onChangeText={setPhoneNumber}
+							<TelInput
+								placeholder="Phone number"
+								keyboardType="phone-pad"
+								autoComplete="tel"
+								returnKeyType="done"
+								onChangeText={setPhoneNumber}
+							/>
+						</Container>
+						<CheckboxContainer>
+							<FormCheckboxLabelInput
+								label="Text me about my applications"
+								defaultTrue
+								onChange={setCanTextApplicant}
+							/>
+							<FormCheckboxLabelInput
+								label="Call me about my applications"
+								defaultTrue
+								onChange={setCanCallApplicant}
+							/>
+						</CheckboxContainer>
+						<MainButton
+							text="Send me a text"
+							onPress={() => {
+								handlePhoneNumberSubmit();
+							}}
+							disabled={loading}
 						/>
-					</Container>
-					<CheckboxContainer>
-						<FormCheckboxLabelInput
-							label="Text me about my applications"
-							defaultTrue
-							onChange={setCanTextApplicant}
+						<Container>
+							<Label>
+								By continuing, you agree to our{" "}
+								<Link href={"https://earny.io/termsandconditions"}>
+									<LinkLabel>terms and conditions.</LinkLabel>
+								</Link>
+							</Label>
+						</Container>
+						<FirebaseRecaptchaVerifierModal
+							ref={recaptchaVerifier}
+							firebaseConfig={app.options}
 						/>
-						<FormCheckboxLabelInput
-							label="Call me about my applications"
-							defaultTrue
-							onChange={setCanCallApplicant}
-						/>
-					</CheckboxContainer>
-					<MainButton
-						text="Send me a text"
-						onPress={() => {
-							handlePhoneNumberSubmit();
-						}}
-						disabled={loading}
-					/>
-					<Container>
-						<Label>
-							By continuing, you agree to our{" "}
-							<Link href={"https://earny.io/termsandconditions"}>
-								<LinkLabel>terms and conditions.</LinkLabel>
-							</Link>
-						</Label>
-					</Container>
-					<FirebaseRecaptchaVerifierModal
-						ref={recaptchaVerifier}
-						firebaseConfig={app.options}
-					/>
-				</PaddedContainer>
+					</PaddedContainer>
+				</KeyboardAwareScrollView>
 			</KeyboardDismissableView>
 		</ScreenContainer>
 	);
