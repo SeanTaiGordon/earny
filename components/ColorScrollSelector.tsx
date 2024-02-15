@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import TickIcon from "react-native-bootstrap-icons/icons/check-lg";
 
 interface Props {
-	onColorChange: (color: String) => void;
+	onColorChange: (color: string) => void;
 	getColor: String;
 	getSelectedIcon: String;
 }
