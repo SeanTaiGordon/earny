@@ -2,6 +2,8 @@ export * from "./FormCheckboxLabelInput";
 export * from "./FormTextInput";
 export * from "./ScreenContainer";
 export * from "./ViewContainer";
+export * from "./ProgressBar";
+export * from "./ProgressCircle";
 export * from "./Title";
 export * from "./TitleContainer";
 export * from "./SecondaryHeader";

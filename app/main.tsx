@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import {
+	Button,
 	KeyboardDismissableView,
 	MainScreenProgressContainer,
 	PaddedContainer,
@@ -12,6 +13,7 @@ import styled from "styled-components/native";
 import { RefreshControl, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { gql, useQuery } from "@apollo/client";
+import CameraIcon from "react-native-bootstrap-icons/icons/camera-reels-fill";
 
 const USER_QUERY_SELF = gql`
 	query Self {
@@ -59,15 +61,38 @@ const Main = () => {
 					</Profile>
 
 					<PaddedContainer>
-						<MainScreenProgressContainer filled={false}>
-							<Title>Matching you with a job...</Title>
-							<CenterEmoji>🔎</CenterEmoji>
-							<Text centered>We'll keep you updated!</Text>
+						<MainScreenProgressContainer>
+							<Title>One last thing...</Title>
+							<Text centered>
+								Record a short clip answering the question{" "}
+								<Text bold>
+									"Would you choose a beach, city or mountain break- and why?"
+								</Text>
+							</Text>
+							<Button
+								title="Record a video"
+								Icon={CameraIcon}
+								onPress={() => {
+									router.push({
+										pathname: "/recordVideo",
+									});
+								}}
+							/>
 						</MainScreenProgressContainer>
 
 						<DottedLine />
 
-						<MainScreenProgressContainer filled={true}>
+						<MainScreenProgressContainer filled>
+							<Title>Matching you with a job...</Title>
+							<CenterEmoji>🔎</CenterEmoji>
+							<Text centered purple>
+								We'll keep you updated! This can take up to a few days.
+							</Text>
+						</MainScreenProgressContainer>
+
+						<DottedLine />
+
+						<MainScreenProgressContainer filled>
 							<Title>Next step: matched</Title>
 							<Text purple>
 								Once we find the perfect job match for you, we'll send you a
@@ -97,11 +122,16 @@ const CenterEmoji = styled(Subtitle)`
 	text-align: center;
 `;
 
-const Text = styled(Subtitle)<{ centered?: boolean; purple?: boolean }>`
+const Text = styled(Subtitle)<{
+	centered?: boolean;
+	purple?: boolean;
+	bold?: boolean;
+}>`
 	text-align: ${({ centered }) => (centered ? "center" : "left")};
 	margin-top: 10px;
 	margin-bottom: 30px;
 	${({ purple }) => purple && "color: #8e4dff;"};
+	${({ bold }) => bold && "font-family:Jost_500Medium;"};
 `;
 
 const DottedLine = styled.View`

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components/native";
 
 interface Props {
-	filled: Boolean;
+	filled?: Boolean;
 	children?: ReactNode;
 }
 

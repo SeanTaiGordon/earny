@@ -5,7 +5,7 @@ import {
 } from "@expo-google-fonts/dela-gothic-one";
 import { Jost_400Regular, Jost_500Medium } from "@expo-google-fonts/jost";
 
-import { Stack } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
 import { User, onAuthStateChanged } from "firebase/auth";
 import {
 	ApolloClient,
@@ -17,6 +17,8 @@ import { setContext } from "@apollo/client/link/context";
 import { app, auth } from "../config";
 
 export const UserContext = createContext<User | undefined>(undefined);
+
+SplashScreen.preventAutoHideAsync();
 
 const Layout = () => {
 	let [fontsLoaded] = useFonts({
@@ -60,7 +62,10 @@ const Layout = () => {
 	const [user, setUser] = useState<User | null>(null);
 
 	useEffect(() => {
-		onAuthStateChanged(auth, (user) => setUser(user));
+		onAuthStateChanged(auth, async (user) => {
+			setUser(user);
+			await SplashScreen.hideAsync();
+		});
 	}, [user]);
 
 	if (!fontsLoaded) {

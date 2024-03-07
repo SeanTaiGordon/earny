@@ -5,11 +5,12 @@ interface Props {
 	title: string;
 	onPress?: () => void;
 	Icon: any;
+	backgroundColor?: string;
 }
 
-export const Button = ({ title, onPress, Icon }: Props) => {
+export const Button = ({ title, onPress, Icon, backgroundColor }: Props) => {
 	return (
-		<Container onPress={onPress}>
+		<Container onPress={onPress} backgroundColor={backgroundColor}>
 			<Icon color="#000" height="20" width="20" viewBox="0 0 16 16" />
 
 			<Header>
@@ -19,7 +20,7 @@ export const Button = ({ title, onPress, Icon }: Props) => {
 	);
 };
 
-const Container = styled.TouchableOpacity`
+const Container = styled.TouchableOpacity<{ backgroundColor?: string }>`
 	display: flex;
 	padding: 14px 18px;
 	flex-direction: row;
@@ -28,7 +29,7 @@ const Container = styled.TouchableOpacity`
 	gap: 17px;
 	align-self: stretch;
 	border-radius: 10px;
-	background-color: #eaeaea;
+	background-color: ${({ backgroundColor }) => backgroundColor || "#eaeaea"};
 `;
 
 const Header = styled.View`
