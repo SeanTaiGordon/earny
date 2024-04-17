@@ -68,23 +68,4 @@ const MainButtonContainer = styled.View`
 	padding-top: 30px;
 `;
 
-const RefreshButtonContainer = styled.TouchableOpacity`
-	margin-top: 10px;
-	display: flex;
-	padding: 14px 18px;
-	flex-direction: row;
-	gap: 17px;
-	border-radius: 10px;
-	background: #eaeaea;
-	align-self: center;
-`;
-
-const ButtonText = styled.Text`
-	color: #000;
-	font-family: Jost_400Regular;
-	font-size: 17px;
-	font-weight: 500;
-	align-self: center;
-`;
-
 export default AddReferralCode;
