@@ -6,14 +6,13 @@ import {
 	PaddedContainer,
 	Profile,
 	ScreenContainer,
-	Subtitle,
-	Title,
 } from "../components";
 import styled from "styled-components/native";
 import { RefreshControl, ScrollView } from "react-native";
 import { router } from "expo-router";
 import { gql, useQuery } from "@apollo/client";
 import CameraIcon from "react-native-bootstrap-icons/icons/camera-reels-fill";
+import { ACCOUNT_SETUP_STATUS } from "../constants";
 
 const USER_QUERY_SELF = gql`
 	query Self {
@@ -22,6 +21,8 @@ const USER_QUERY_SELF = gql`
 				emoji
 				color
 			}
+			accountSetupStatus
+			videoUrl
 		}
 	}
 `;
@@ -29,6 +30,7 @@ const USER_QUERY_SELF = gql`
 const Main = () => {
 	const userQuery = useQuery(USER_QUERY_SELF);
 
+	const { accountSetupStatus, videoUrl } = userQuery.data?.self || {};
 	const { color, emoji } = userQuery.data?.self?.profile || {};
 	const [refreshing, setRefreshing] = React.useState(false);
 
@@ -61,54 +63,49 @@ const Main = () => {
 					</Profile>
 
 					<PaddedContainer>
-						<MainScreenProgressContainer>
-							<Title>One last thing...</Title>
-							<Text centered>
-								Record a short clip answering the question{" "}
-								<Text bold>
-									"Would you choose a beach, city or mountain break- and why?"
-								</Text>
-							</Text>
-							<Button
-								title="Record a video"
-								Icon={CameraIcon}
-								onPress={() => {
-									router.push({
-										pathname: "/recordVideo",
-									});
-								}}
-							/>
-						</MainScreenProgressContainer>
+						<MainScreenProgressContainer
+							title="One last thing..."
+							text={
+								"Record a short clip answering the question - 'Would you choose a beach, city or mountain break- and why?'"
+							}
+							button={
+								<Button
+									title={videoUrl ? "Re-record video" : "Record a video"}
+									Icon={CameraIcon}
+									onPress={() => {
+										router.push({
+											pathname: "/recordVideo",
+										});
+									}}
+								/>
+							}
+							filled={
+								accountSetupStatus !== null &&
+								accountSetupStatus !== ACCOUNT_SETUP_STATUS.RECORD_VIDEO
+							}
+						/>
+
+						<DottedLine />
+						<MainScreenProgressContainer
+							title="Matching you with a job..."
+							text="🔎 We'll keep you updated! This can take up to a few days."
+							filled={accountSetupStatus !== ACCOUNT_SETUP_STATUS.JOB_MATCHING}
+						/>
 
 						<DottedLine />
 
-						<MainScreenProgressContainer filled>
-							<Title>Matching you with a job...</Title>
-							<CenterEmoji>🔎</CenterEmoji>
-							<Text centered purple>
-								We'll keep you updated! This can take up to a few days.
-							</Text>
-						</MainScreenProgressContainer>
-
+						<MainScreenProgressContainer
+							title="Next step: matched"
+							text="Once we find the perfect job match for you, we'll send you a notification and you can decide to see whether it's a good fit!"
+							filled={accountSetupStatus !== ACCOUNT_SETUP_STATUS.INTERVIEWING}
+						/>
 						<DottedLine />
 
-						<MainScreenProgressContainer filled>
-							<Title>Next step: matched</Title>
-							<Text purple>
-								Once we find the perfect job match for you, we'll send you a
-								notification and you can decide to see whether it's a good fit!
-							</Text>
-						</MainScreenProgressContainer>
-
-						<DottedLine />
-
-						<MainScreenProgressContainer filled={true}>
-							<Title>Take it or leave it</Title>
-							<Text purple>
-								You'll have the option to take the opportunity or leave it for
-								someone else.
-							</Text>
-						</MainScreenProgressContainer>
+						<MainScreenProgressContainer
+							title="Take it or leave it"
+							text="You'll have the option to take the opportunity or leave it for someone else."
+							filled={accountSetupStatus !== ACCOUNT_SETUP_STATUS.COMPLETE}
+						/>
 					</PaddedContainer>
 				</ScrollView>
 			</KeyboardDismissableView>
@@ -117,22 +114,6 @@ const Main = () => {
 };
 
 export default Main;
-
-const CenterEmoji = styled(Subtitle)`
-	text-align: center;
-`;
-
-const Text = styled(Subtitle)<{
-	centered?: boolean;
-	purple?: boolean;
-	bold?: boolean;
-}>`
-	text-align: ${({ centered }) => (centered ? "center" : "left")};
-	margin-top: 10px;
-	margin-bottom: 30px;
-	${({ purple }) => purple && "color: #8e4dff;"};
-	${({ bold }) => bold && "font-family:Jost_500Medium;"};
-`;
 
 const DottedLine = styled.View`
 	border-style: dotted;
