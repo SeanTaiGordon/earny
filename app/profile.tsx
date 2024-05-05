@@ -14,6 +14,8 @@ import styled from "styled-components/native";
 import LogoutIcon from "react-native-bootstrap-icons/icons/box-arrow-right";
 import SettingsIcon from "react-native-bootstrap-icons/icons/gear-fill";
 import ReferralIcon from "react-native-bootstrap-icons/icons/person-plus";
+import ExperienceIcon from "react-native-bootstrap-icons/icons/lightbulb";
+
 import { ScrollView } from "react-native";
 
 const USER_QUERY_SELF = gql`
@@ -32,6 +34,7 @@ const USER_QUERY_SELF = gql`
 			}
 			customerSlider
 			availableHoursPerWeek
+			skills
 		}
 	}
 `;
@@ -47,6 +50,7 @@ export const Profile = () => {
 		profile,
 		customerSlider,
 		availableHoursPerWeek,
+		skills,
 	} = data?.self || {};
 
 	const { emoji, color } = profile || {};
@@ -115,7 +119,7 @@ export const Profile = () => {
 						)}
 					</PaddedContainer>
 					<Button
-						title={"Modify preferences"}
+						title="Modify preferences"
 						onPress={() =>
 							router.push({
 								pathname: "/preferredRoles",
@@ -130,15 +134,27 @@ export const Profile = () => {
 
 					<Container>
 						<Button
-							title={"Refer someone"}
+							title="Modify experience"
 							onPress={() =>
 								router.push({
-									pathname: "/referUser",
+									pathname: "/addSkills",
+									params: {
+										initialSelectedSkills: JSON.stringify(skills),
+									},
 								})
 							}
-							Icon={ReferralIcon}
+							Icon={ExperienceIcon}
 						/>
 					</Container>
+					<Button
+						title="Refer someone"
+						onPress={() =>
+							router.push({
+								pathname: "/referUser",
+							})
+						}
+						Icon={ReferralIcon}
+					/>
 				</PaddedContainer>
 				<PaddedContainer>
 					<Button

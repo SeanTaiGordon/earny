@@ -137,7 +137,7 @@ const PhoneNumberRequest = () => {
 				?.confirm(verificationCode)
 				.then(() => {
 					setLoading(false);
-					router.replace("preferredRoles");
+					router.replace("addSkills");
 				})
 				.catch(() => {
 					alert("Wrong code 😪");

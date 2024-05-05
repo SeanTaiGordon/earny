@@ -8,3 +8,4 @@ export * from "./EmojiScrollSelector";
 export * from "./ColorScrollSelector";
 export * from "./Button";
 export * from "./base";
+export * from "./SelectableButton";

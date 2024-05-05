@@ -1,18 +1,22 @@
 {
-  "cli": {
-    "version": ">= 7.2.0"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {}
-  },
-  "submit": {
-    "production": {}
-  }
+	"cli": {
+		"version": ">= 7.1.0"
+	},
+	"build": {
+		"development": {
+			"developmentClient": true,
+			"distribution": "internal"
+		},
+		"preview": {
+			"developmentClient": true,
+			"distribution": "internal",
+			"ios": {
+				"simulator": true
+			}
+		},
+		"production": {}
+	},
+	"submit": {
+		"production": {}
+	}
 }
